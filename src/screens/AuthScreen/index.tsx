@@ -1,7 +1,5 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { auth } from '../../config/firebase';
 import { colors } from "../../constants/Colors";
 
 export const AuthScreen: React.FC = () => {
@@ -10,23 +8,12 @@ export const AuthScreen: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const onRegister = async () => {
-        try {
-            const credentials = await createUserWithEmailAndPassword(
-                auth,
-                email,
-                password
-            )
+    const handleLogin = async () => {
 
-            console.log('Credentials:', credentials)
-        }
-        catch(e) {
-            console.error(e)
-        }
     }
-
-    function onLogin() {
-        console.log('Login')
+    
+    const handleRegister = async () => {
+        
     }
 
     return (
@@ -53,12 +40,12 @@ export const AuthScreen: React.FC = () => {
                 />
             </View>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.loginButton} onPress={onLogin} >
+                <TouchableOpacity style={styles.loginButton} onPress={handleLogin} >
                     <Text style={styles.loginText}>
                         Login
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.registerButton} onPress={onRegister} >
+                <TouchableOpacity style={styles.registerButton} onPress={handleRegister} >
                     <Text style={styles.registerText}>
                         Register
                     </Text>

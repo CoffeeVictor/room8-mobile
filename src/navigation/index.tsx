@@ -3,9 +3,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import { AuthScreen } from '../screens/AuthScreen';
-
-const isLogged = false;
+import { Home } from '../screens/Home';
 
 export default function Navigation() {
   return (
@@ -22,6 +22,11 @@ export default function Navigation() {
 const Stack = createNativeStackNavigator();
 
 function RootNavigator() {
+
+  const auth = useAuth();
+
+  const isLogged = auth?.user;
+
   return (
     <Stack.Navigator>
       {
@@ -39,7 +44,7 @@ const BottomTab = createBottomTabNavigator();
 function BottomTabNavigator() {
   return (
     <BottomTab.Navigator>
-
+      <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
     </BottomTab.Navigator>
   );
 }
