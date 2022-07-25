@@ -1,13 +1,15 @@
 import { FirebaseError } from "firebase/app";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, User } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, User, UserCredential } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../config/firebase";
 
 interface IAuthValue {
-    user: User | null
+    user: User | null,
+    login: (email: string, password: string) => Promise<UserCredential | undefined>,
+    register: (email: string, password: string) => Promise<UserCredential | undefined>
 }
 
-const AuthContext = createContext<IAuthValue | undefined>(undefined);
+const AuthContext = createContext<IAuthValue | null>(null);
 
 export function useAuth() {
     return useContext(AuthContext);

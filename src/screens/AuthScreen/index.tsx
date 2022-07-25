@@ -1,19 +1,21 @@
 import { useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { colors } from "../../constants/Colors";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const AuthScreen: React.FC = () => {
 
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const auth = useAuth();
 
     const handleLogin = async () => {
-
+        auth?.login(email, password);
     }
     
     const handleRegister = async () => {
-        
+        auth?.register(email, password);
     }
 
     return (
