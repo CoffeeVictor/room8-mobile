@@ -1,12 +1,13 @@
 import { FirebaseError } from "firebase/app";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, User, UserCredential } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, UserCredential } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../config/firebase";
 
 interface IAuthValue {
     user: User | null,
     login: (email: string, password: string) => Promise<UserCredential | undefined>,
-    register: (email: string, password: string) => Promise<UserCredential | undefined>
+    register: (email: string, password: string) => Promise<UserCredential | undefined>,
+    logout: () => Promise<void>
 }
 
 const AuthContext = createContext<IAuthValue | null>(null);
@@ -45,16 +46,28 @@ export const AuthProvider: React.FC = ({children}) => {
             )
         }
         catch(e) {
+
+            console.log('Error is:', JSON.stringify(e))
+
             if(e instanceof FirebaseError) {
-                console.error(e.message);
             }
+        }
+    }
+
+    async function logout() {
+        try {
+            return await signOut(auth);
+        }
+        catch(e) {
+            console.error(e)
         }
     }
 
     const value = {
         user,
         login,
-        register
+        register,
+        logout
     }
 
     return (
