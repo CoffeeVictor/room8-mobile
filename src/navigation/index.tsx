@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthScreen } from '../screens/AuthScreen';
+import { Costs } from '../screens/Costs';
 import { Home } from '../screens/Home';
 import { Notifications } from '../screens/Notifications';
 
@@ -16,9 +17,12 @@ export default function Navigation() {
   );
 }
 
-const TAB_ICONS = {
+const TAB_ICONS: {
+  [key: string]: JSX.Element
+} = {
   Home: <AntDesign name={'home'} />,
-  Notifications: <FontAwesome5 name="bell" />
+  Notifications: <FontAwesome5 name="bell" />,
+  Costs: <FontAwesome name='dollar' />
 }
 
 /**
@@ -50,17 +54,28 @@ const BottomTab = createBottomTabNavigator();
 function BottomTabNavigator() {
   return (
     <BottomTab.Navigator>
-      <BottomTab.Screen name="Home" component={Home} options={{headerShown: false, tabBarIcon: (args) => {
-        return getTabIcon('Home');
-      }}} />
+      <BottomTab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerShown: false,
+          tabBarIcon: () => getTabIcon('Home')
+        }}
+      />
       <BottomTab.Screen
         name='Notifications'
         component={Notifications}
         options={{
           headerShown: false,
-          tabBarIcon: (args) => {
-            return getTabIcon('Notifications');
-          }
+          tabBarIcon: () => getTabIcon('Notifications')
+        }}
+      />
+      <BottomTab.Screen
+        name='Costs'
+        component={Costs}
+        options={{
+          headerShown: false,
+          tabBarIcon: () => getTabIcon('Costs')
         }}
       />
     </BottomTab.Navigator>
@@ -77,6 +92,6 @@ function BottomTabNavigator() {
 //   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 // }
 
-function getTabIcon(name: "Home" | "Notifications") {
+function getTabIcon(name: string) {
   return TAB_ICONS[name];
 }
