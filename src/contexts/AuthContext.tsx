@@ -22,6 +22,7 @@ export const AuthProvider: React.FC = ({children}) => {
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
+            console.log('Changed:', user)
             setUser(user);
         });
 
@@ -29,6 +30,7 @@ export const AuthProvider: React.FC = ({children}) => {
     }, []);
 
     async function login(email: string, password: string) {
+        console.log('Login triggered')
         try {
             return await signInWithEmailAndPassword(auth, email, password);
         }
@@ -38,6 +40,7 @@ export const AuthProvider: React.FC = ({children}) => {
     }
 
     async function register(email: string, password: string) {
+        console.log('Register fired')
         try {
             return await createUserWithEmailAndPassword(
                 auth,

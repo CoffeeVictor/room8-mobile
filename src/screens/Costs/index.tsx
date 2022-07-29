@@ -30,27 +30,35 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     userInfoArea: {
-        flex: 0.25,
+        flex: 0.2,
         width: '100%',
-        backgroundColor: colors.primary,
+        backgroundColor: 'white',
         flexDirection: 'row',
         alignItems: 'flex-end',
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        shadowColor: 'black',
+        elevation: 10,
+        shadowOffset: {
+            height: 2,
+            width: 2
+        }
     },
     userInfoContainer: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 10,
-        marginLeft: 10
+        marginLeft: 10,
     },
     userInfoText: {
 
     },
     avatar: {
-        width: 100,
-        height: 100,
-        borderRadius: 50
+        width: 80,
+        height: 80,
+        borderRadius: 40,
+        borderWidth: 2,
+        borderColor: colors.primary
     },
     costsAreaContainer: {
 
