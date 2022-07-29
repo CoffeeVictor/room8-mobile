@@ -1,7 +1,6 @@
 import {
   SafeAreaView,
   ScrollView,
-  SectionList,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -10,53 +9,60 @@ import {
 import { colors } from '../../constants/Colors';
 import { useAuth } from '../../contexts/AuthContext';
 import { AntDesign } from '@expo/vector-icons';
+import { DataTable } from 'react-native-paper';
+import { useState } from 'react';
 
 export const Home: React.FC = () => {
   const auth = useAuth();
-
-  const handleLogout = async () => {
-    auth?.logout();
-  };
-  const grups = [
+  const [groups, setgroups] = useState([
     {
       grup: 'Grupo 1',
       data: [
-        { name: 'Maely', expense: '123.34' },
-        { name: 'Rodrigues', expense: '325.32' },
+        { name: 'Maely', expense: '43.44', status: 'Falta Pagar' },
+        { name: 'Rodrigues', expense: '105.32', status: 'Falta Receber' },
+        { name: 'Victor', expense: '61.88', status: 'Falta Pagar' },
       ],
     },
     {
       grup: 'Grupo 2',
       data: [
-        { name: 'Lucas', expense: '13.11' },
-        { name: 'Giulia', expense: '5.0' },
+        { name: 'Lucas', expense: '13.11', status: 'Falta Pagar' },
+        { name: 'Giulia', expense: '0', status: 'Em dia' },
+        { name: 'Fernando', expense: '3.10', status: 'Falta Pagar' },
+        { name: 'Matheus', expense: '10.01', status: 'Falta Pagar' },
       ],
     },
-  ];
-  const Item = ({ name, expense }) => (
-    <View style={styles.listItem}>
-      <Text style={styles.text}>{name}</Text>
-      <Text style={styles.text}>R$ {expense}</Text>
-    </View>
-  );
-
+  ]);
+  const handleLogout = async () => {
+    auth?.logout();
+  };
+  console.log(groups);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <Text style={styles.title}>Bem vindo {auth?.user?.email}</Text>
-        <Text style={styles.title}>Grupos </Text>
-        <SafeAreaView style={styles.containerList}>
-          <SectionList
-            sections={grups}
-            keyExtractor={(item, index) => item.name + index}
-            renderItem={({ item }) => (
-              <Item name={item.name} expense={item.expense} />
-            )}
-            renderSectionHeader={({ section: { grup } }) => (
-              <Text style={styles.text}>{grup}</Text>
-            )}
-          />
-        </SafeAreaView>
+        <Text style={styles.text2}>Grupos: </Text>
+        <View style={styles.containerTable}>
+          {groups.map((item) => (
+            <View style={styles.containerList}>
+              <Text style={styles.text2}>{item.grup} </Text>
+              <DataTable>
+                <DataTable.Header>
+                  <DataTable.Title>Nome</DataTable.Title>
+                  <DataTable.Title>Status</DataTable.Title>
+                  <DataTable.Title numeric>R$</DataTable.Title>
+                </DataTable.Header>
+                {item.data.map(({ name, expense, status }) => (
+                  <DataTable.Row>
+                    <DataTable.Cell>{name}</DataTable.Cell>
+                    <DataTable.Cell>{status}</DataTable.Cell>
+                    <DataTable.Cell numeric>{expense}</DataTable.Cell>
+                  </DataTable.Row>
+                ))}
+              </DataTable>
+            </View>
+          ))}
+        </View>
         <SafeAreaView style={styles.button}>
           <TouchableOpacity
             style={styles.addGroup}
@@ -86,7 +92,7 @@ const styles = StyleSheet.create({
     flex: 3,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.secondary,
+    paddingBottom: 50,
   },
   logoutButton: {
     backgroundColor: 'white',
@@ -114,6 +120,12 @@ const styles = StyleSheet.create({
     fontSize: 25,
     textAlign: 'center',
   },
+  text2: {
+    color: colors.primary,
+    fontSize: 30,
+    paddingTop: 20,
+    paddingLeft: 5,
+  },
   title: {
     color: colors.primary,
     fontSize: 40,
@@ -140,5 +152,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: '100%',
     height: '100%',
+  },
+  containerTable: {
+    paddingTop: 10,
+    paddingHorizontal: 30,
   },
 });
