@@ -1,48 +1,97 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { colors } from "../../constants/Colors";
-import { useAuth } from "../../contexts/AuthContext";
+import { useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { TopBar } from '../../components/TobBar';
+import { colors } from '../../constants/Colors';
+import { HomeList } from './HomeList';
 
 export const Home: React.FC = () => {
-
-    const auth = useAuth();
-
-    const handleLogout = async () => {
-        auth?.logout();
-    }
-
-    return (
-        <View style={styles.container}>
-            <Text>
-                Bem vindo {auth?.user?.email}
-            </Text>
-            <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-                <Text style={styles.logoutButtonText}>
-                    Logout
-                </Text>
+  const groups = [];
+  const people = [
+    { name: 'Maely', totalexpense: '23.43', status: 'Pagar' },
+    { name: 'Rodrigues', totalexpense: '23.43', status: 'Receber' },
+    { name: 'Victor', totalexpense: '0', status: 'Em dia' },
+  ];
+  const [cod, setCod] = useState('');
+  return (
+    <View style={styles.container}>
+      <TopBar></TopBar>
+      <SafeAreaView style={styles.view}>
+        {groups.length == 0 ? (
+          <SafeAreaView>
+            <Text style={styles.text}>Você não possui Grupo</Text>
+            <Text style={styles.text}>Entre em um Grupo ou crie um novo</Text>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => console.log('criar')}
+            >
+              <Text style={styles.textButton}> Criar um Grupo</Text>
             </TouchableOpacity>
-        </View>
-    )
-}
+
+            <Text style={styles.text}>Ou Entre em um Grupo já formado:</Text>
+            <TextInput
+              style={styles.formInput}
+              placeholder={'Digite o código do grupo'}
+              keyboardType={'name-phone-pad'}
+              value={cod}
+              onChangeText={setCod}
+              autoCapitalize={'none'}
+            ></TextInput>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => console.log('entrar')}
+            >
+              <Text style={styles.textButton}> Entrar no Grupo</Text>
+            </TouchableOpacity>
+          </SafeAreaView>
+        ) : (
+          <HomeList people={people}></HomeList>
+        )}
+      </SafeAreaView>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    logoutButton: {
-        backgroundColor: 'white',
-        borderColor: colors.primary,
-        borderWidth: 2,
-        marginTop: 5,
-        width: '100%',
-        padding: 15,
-        borderRadius: 10,
-        alignItems: 'center',
-    },
-    logoutButtonText: {
-        color: colors.primary,
-        fontSize: 16,
-        fontWeight: '700'
-    }
-})
+  container: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  formInput: {
+    backgroundColor: 'white',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 5,
+  },
+  view: {
+    marginBottom: 10,
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+  },
+  text: {
+    color: colors.heading,
+    fontSize: 20,
+    alignItems: 'center',
+  },
+  button: {
+    marginTop: 20,
+    marginBottom: 20,
+    width: '50%',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    backgroundColor: colors.primary,
+  },
+  textButton: {
+    color: 'white',
+    fontSize: 20,
+  },
+});
