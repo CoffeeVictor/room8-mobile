@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TopBar } from '../../components/TobBar';
 import { colors } from '../../constants/Colors';
@@ -8,27 +14,27 @@ import { HomeList } from './HomeList';
 export const Home: React.FC = () => {
   const groups = [];
   const people = [
-    { name: 'Maely', totalexpense: '23.43', status: 'Falta Pagar' },
-    { name: 'Rodrigues', totalexpense: '23.43', status: 'Falta Receber' },
+    { name: 'Maely', totalexpense: '23.43', status: 'Pagar' },
+    { name: 'Rodrigues', totalexpense: '23.43', status: 'Receber' },
     { name: 'Victor', totalexpense: '0', status: 'Em dia' },
   ];
   const [cod, setCod] = useState('');
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <TopBar></TopBar>
       <SafeAreaView style={styles.view}>
         {groups.length == 0 ? (
           <SafeAreaView>
             <Text style={styles.text}>Você não possui Grupo</Text>
-            <Text style={styles.text}>Entre em um grupo ou crie um novo</Text>
+            <Text style={styles.text}>Entre em um Grupo ou crie um novo</Text>
             <TouchableOpacity
               style={styles.button}
               onPress={() => console.log('criar')}
             >
-              <Text style={styles.textButton}> Criar um grupo</Text>
+              <Text style={styles.textButton}> Criar um Grupo</Text>
             </TouchableOpacity>
 
-            <Text style={styles.text}>OU Entre em um Grupo já formado:</Text>
+            <Text style={styles.text}>Ou Entre em um Grupo já formado:</Text>
             <TextInput
               style={styles.formInput}
               placeholder={'Digite o código do grupo'}
@@ -41,14 +47,14 @@ export const Home: React.FC = () => {
               style={styles.button}
               onPress={() => console.log('entrar')}
             >
-              <Text style={styles.textButton}> Entrar no grupo</Text>
+              <Text style={styles.textButton}> Entrar no Grupo</Text>
             </TouchableOpacity>
           </SafeAreaView>
         ) : (
           <HomeList people={people}></HomeList>
         )}
       </SafeAreaView>
-    </SafeAreaView>
+    </View>
   );
 };
 
