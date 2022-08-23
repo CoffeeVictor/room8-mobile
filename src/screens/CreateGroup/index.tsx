@@ -1,29 +1,34 @@
 import { View, Text, StyleSheet, TextInput,TouchableOpacity, ScrollView,KeyboardAvoidingView, FlatList} from "react-native"
 import { colors } from "../../constants/Colors"
 import { useEffect, useState } from "react";
+import { db, firestore } from "../../config/firebase";
 
 export const CreateGroup: React.FC = () => {
 
     const [groupName,setGroupName] = useState('');
-    const [memberName,setMemberName] = useState('');
 
-    const [memberList,setMemberList] = useState(['Member List:']);
+    const groupRef = firestore.collection(db,'Groups')
 
-    const addMember = async () => {
-        if(memberName != ''){
-            memberList.push(memberName);
-            console.log({memberList})
+    const onAddButtonPress = () => {
+        let code = Math.floor(Math.random() * 900000) + 100000;
+        let users = [''];
+        if (groupName && groupName.length > 0) {
+            const data = {
+                name: groupName,
+                code: code,
+                users: users
+            };
+            firestore.addDoc(groupRef,data).then(_doc =>{
+                setGroupName('');
+                console.log(data);
+            });
         }
-    }
-
-    const createGroup = async () =>{
-        //TO DO: Back-end integration
-        setMemberList(['Member List:'])
     }
 
     return(
         <KeyboardAvoidingView style={styles.container}>
             <View style={styles.formArea}>
+                <Text style={styles.listItem}>Name the group you wish to create:</Text>
                 <TextInput
                     style={styles.formInput}
                     placeholder={'Group Name'}
@@ -31,29 +36,13 @@ export const CreateGroup: React.FC = () => {
                     onChangeText={setGroupName}
                     autoCapitalize={'none'}
                 />
-                <TextInput
-                    style={styles.formInput}
-                    placeholder={'Add a member...'}
-                    value={memberName}
-                    onChangeText={setMemberName}
-                    autoCapitalize={'none'}
-                />
             </View>
             <View style={styles.buttonArea}>
-                <TouchableOpacity style={styles.addMemberButton} onPress={addMember}>
-                    <Text style={styles.addMemberText}>
-                        Add New Member
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.createGroupButton} onPress={createGroup}>
+                <TouchableOpacity style={styles.createGroupButton} onPress={onAddButtonPress}>
                     <Text style={styles.createGroupText}>
                         Create Group
                     </Text>
                 </TouchableOpacity>
-            </View>
-            <View style={styles.memberListArea}>
-                <FlatList style={styles.memberListView} data={memberList} renderItem={({item}) => <Text style={styles.listItem}>{item}</Text>}>
-                </FlatList>
             </View>
         </KeyboardAvoidingView>
     )
