@@ -12,7 +12,7 @@ export const HomeList: React.FC = ({ people }) => {
           <DataTable>
             <DataTable.Header style={styles.textTable}>
               <DataTable.Title>
-                <Text style={styles.textTable}>Nome</Text>
+                <Text style={styles.textTable}>Name</Text>
               </DataTable.Title>
               <DataTable.Title>
                 <Text style={styles.textTable}>Status</Text>
@@ -37,7 +37,7 @@ export const HomeList: React.FC = ({ people }) => {
                   {
                     <TouchableOpacity
                       style={styles.buttonRemove}
-                      onPress={() => console.log('código')}
+                      onPress={() => console.log('code')}
                     >
                       <AntDesign
                         name='delete'
@@ -54,9 +54,9 @@ export const HomeList: React.FC = ({ people }) => {
 
         <TouchableOpacity
           style={styles.buttonAdd}
-          onPress={() => console.log('código')}
+          onPress={() => console.log('code')}
         >
-          <Text style={styles.textButton}> Compartilhar grupo</Text>
+          <Text style={styles.textButton}> Share Group</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
