@@ -30,16 +30,16 @@ export const Home: React.FC = () => {
 
         {groups.length == 0 ? (
           <SafeAreaView>
-            <Text style={styles.text}>You don't have a Group</Text>
-            <Text style={styles.text}>Join a Group or Creat a New Group</Text>
+            <Text style={styles.text}>You don't have a group</Text>
+            <Text style={styles.text}>Join a group or create a new one</Text>
             <TouchableOpacity
               style={styles.button}
               onPress={() => navi.navigate('Create')}
             >
-              <Text style={styles.textButton}> Creat Group</Text>
+              <Text style={styles.textButton}> Create Group</Text>
             </TouchableOpacity>
 
-            <Text style={styles.text}>Or Join an Already Created Group :</Text>
+            <Text style={styles.text}>Or join an already created group :</Text>
             <TextInput
               style={styles.formInput}
               placeholder={'Enter the Group Code'}
