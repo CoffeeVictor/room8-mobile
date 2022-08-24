@@ -2,6 +2,8 @@ import { View, Text, StyleSheet, TextInput,TouchableOpacity, ScrollView,Keyboard
 import { colors } from "../../constants/Colors"
 import { useEffect, useState } from "react";
 import { db, firestore } from "../../config/firebase";
+import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const CreateGroup: React.FC = () => {
 
@@ -9,18 +11,25 @@ export const CreateGroup: React.FC = () => {
 
     const groupRef = firestore.collection(db,'Groups')
 
+    const navi = useNavigation()
+
+    const auth = useAuth()
+
+    const user = auth?.user?.uid
+
     const onAddButtonPress = () => {
-        let code = Math.floor(Math.random() * 900000) + 100000;
-        let users = [''];
+        let users = [user];
+        let items = [''];
         if (groupName && groupName.length > 0) {
             const data = {
                 name: groupName,
-                code: code,
-                users: users
+                users: users,
+                items: items
             };
             firestore.addDoc(groupRef,data).then(_doc =>{
                 setGroupName('');
                 console.log(data);
+                navi.goBack()
             });
         }
     }

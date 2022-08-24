@@ -47,6 +47,8 @@ function RootNavigator() {
         :
           <Stack.Screen name='AuthScreen' component={AuthScreen} options={{ headerShown: false }} />
       }
+      <Stack.Screen name="Create" component={CreateGroup}/>
+      <Stack.Screen name="Home" component={Home}/>
     </Stack.Navigator>
   );
 }
@@ -62,14 +64,6 @@ function BottomTabNavigator() {
         options={{
           headerShown: false,
           tabBarIcon: () => getTabIcon('Home')
-        }}
-      />
-      <BottomTab.Screen
-        name='Create Group'
-        component={CreateGroup}
-        options={{
-          headerShown: false,
-          tabBarIcon: () => getTabIcon('Add')
         }}
       />
       <BottomTab.Screen

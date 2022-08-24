@@ -10,8 +10,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TopBar } from '../../components/TobBar';
 import { colors } from '../../constants/Colors';
 import { HomeList } from './HomeList';
+import { useNavigation } from '@react-navigation/native';
+import { CreateGroup } from '../CreateGroup';
 
 export const Home: React.FC = () => {
+  const navi = useNavigation()
   const groups = [];
   const people = [
     { name: 'Maely', totalexpense: '23.43', status: 'Pagar' },
@@ -23,13 +26,13 @@ export const Home: React.FC = () => {
     <View style={styles.container}>
       <TopBar></TopBar>
       <SafeAreaView style={styles.view}>
-        {groups.length == 0 ? (
+         {groups.length == 0 ? (
           <SafeAreaView>
             <Text style={styles.text}>Você não possui Grupo</Text>
             <Text style={styles.text}>Entre em um Grupo ou crie um novo</Text>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => console.log('criar')}
+              onPress={() => navi.navigate('Create')}
             >
               <Text style={styles.textButton}> Criar um Grupo</Text>
             </TouchableOpacity>
@@ -75,11 +78,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     alignItems: 'center',
-  },
-  button: {
-    display: 'flex',
-    flexDirection: 'row',
-    paddingLeft: 40,
   },
   logoutButtonText: {
     color: colors.primary,

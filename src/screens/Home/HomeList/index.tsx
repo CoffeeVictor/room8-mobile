@@ -54,7 +54,7 @@ export const HomeList: React.FC = ({ people }) => {
 
         <TouchableOpacity
           style={styles.buttonAdd}
-          onPress={() => console.log('códig')}
+          onPress={() => console.log('código')}
         >
           <Text style={styles.textButton}> Compartilhar grupo</Text>
         </TouchableOpacity>
