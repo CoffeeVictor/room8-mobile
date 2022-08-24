@@ -10,8 +10,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TopBar } from '../../components/TobBar';
 import { colors } from '../../constants/Colors';
 import { HomeList } from './HomeList';
+import { useNavigation } from '@react-navigation/native';
+import { CreateGroup } from '../CreateGroup';
+
 
 export const Home: React.FC = () => {
+  const navi = useNavigation()
   const groups = [];
   const people = [
     { name: 'Maely', totalexpense: '23.43', status: 'Pay' },
@@ -23,13 +27,14 @@ export const Home: React.FC = () => {
     <View style={styles.container}>
       <TopBar></TopBar>
       <SafeAreaView style={styles.view}>
+
         {groups.length == 0 ? (
           <SafeAreaView>
             <Text style={styles.text}>You don't have a Group</Text>
             <Text style={styles.text}>Join a Group or Creat a New Group</Text>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => console.log('creat')}
+              onPress={() => navi.navigate('Create')}
             >
               <Text style={styles.textButton}> Creat Group</Text>
             </TouchableOpacity>
@@ -38,6 +43,7 @@ export const Home: React.FC = () => {
             <TextInput
               style={styles.formInput}
               placeholder={'Enter the Group Code'}
+
               keyboardType={'name-phone-pad'}
               value={cod}
               onChangeText={setCod}
@@ -45,6 +51,7 @@ export const Home: React.FC = () => {
             ></TextInput>
             <TouchableOpacity
               style={styles.button}
+
               onPress={() => console.log('join')}
             >
               <Text style={styles.textButton}> Join Group</Text>
@@ -75,6 +82,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     alignItems: 'center',
+  },
+  logoutButtonText: {
+    color: colors.primary,
+    fontSize: 16,
+    fontWeight: '700',
+    textAlign: 'center',
   },
   text: {
     color: colors.heading,
