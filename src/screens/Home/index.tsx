@@ -1,107 +1,79 @@
+import { useState } from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { TopBar } from '../../components/TobBar';
 import { colors } from '../../constants/Colors';
-import { useAuth } from '../../contexts/AuthContext';
-import { AntDesign } from '@expo/vector-icons';
-import { DataTable } from 'react-native-paper';
-import { useState } from 'react';
+import { HomeList } from './HomeList';
 
 export const Home: React.FC = () => {
-  const auth = useAuth();
-  const [groups, setgroups] = useState([
-    {
-      grup: 'Grupo 1',
-      data: [
-        { name: 'Maely', expense: '43.44', status: 'Falta Pagar' },
-        { name: 'Rodrigues', expense: '105.32', status: 'Falta Receber' },
-        { name: 'Victor', expense: '61.88', status: 'Falta Pagar' },
-      ],
-    },
-    {
-      grup: 'Grupo 2',
-      data: [
-        { name: 'Lucas', expense: '13.11', status: 'Falta Pagar' },
-        { name: 'Giulia', expense: '0', status: 'Em dia' },
-        { name: 'Fernando', expense: '3.10', status: 'Falta Pagar' },
-        { name: 'Matheus', expense: '10.01', status: 'Falta Pagar' },
-      ],
-    },
-  ]);
-  const handleLogout = async () => {
-    auth?.logout();
-  };
-  console.log(groups);
+  const groups = [];
+  const people = [
+    { name: 'Maely', totalexpense: '23.43', status: 'Pagar' },
+    { name: 'Rodrigues', totalexpense: '23.43', status: 'Receber' },
+    { name: 'Victor', totalexpense: '0', status: 'Em dia' },
+  ];
+  const [cod, setCod] = useState('');
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <Text style={styles.title}>Bem vindo {auth?.user?.email}</Text>
-        <Text style={styles.text2}>Grupos: </Text>
-        <View style={styles.containerTable}>
-          {groups.map((item) => (
-            <View style={styles.containerList}>
-              <Text style={styles.text2}>{item.grup} </Text>
-              <DataTable>
-                <DataTable.Header>
-                  <DataTable.Title>Nome</DataTable.Title>
-                  <DataTable.Title>Status</DataTable.Title>
-                  <DataTable.Title numeric>R$</DataTable.Title>
-                </DataTable.Header>
-                {item.data.map(({ name, expense, status }) => (
-                  <DataTable.Row>
-                    <DataTable.Cell>{name}</DataTable.Cell>
-                    <DataTable.Cell>{status}</DataTable.Cell>
-                    <DataTable.Cell numeric>{expense}</DataTable.Cell>
-                  </DataTable.Row>
-                ))}
-              </DataTable>
-            </View>
-          ))}
-        </View>
-        <SafeAreaView style={styles.button}>
-          <TouchableOpacity
-            style={styles.addGroup}
-            onPress={() => console.log('criar grupo')}
-          >
-            <AntDesign name='pluscircle' size={24} color={colors.primary} />
-            <Text style={styles.logoutButtonText}>Adicionar grupo</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-            <AntDesign name='logout' size={24} color={colors.primary} />
-            <Text style={styles.logoutButtonText}>Logout</Text>
-          </TouchableOpacity>
-        </SafeAreaView>
-      </ScrollView>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <TopBar></TopBar>
+      <SafeAreaView style={styles.view}>
+        {groups.length == 0 ? (
+          <SafeAreaView>
+            <Text style={styles.text}>Você não possui Grupo</Text>
+            <Text style={styles.text}>Entre em um Grupo ou crie um novo</Text>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => console.log('criar')}
+            >
+              <Text style={styles.textButton}> Criar um Grupo</Text>
+            </TouchableOpacity>
+
+            <Text style={styles.text}>Ou Entre em um Grupo já formado:</Text>
+            <TextInput
+              style={styles.formInput}
+              placeholder={'Digite o código do grupo'}
+              keyboardType={'name-phone-pad'}
+              value={cod}
+              onChangeText={setCod}
+              autoCapitalize={'none'}
+            ></TextInput>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => console.log('entrr')}
+            >
+              <Text style={styles.textButton}> Entrar no Grupo</Text>
+            </TouchableOpacity>
+          </SafeAreaView>
+        ) : (
+          <HomeList people={people}></HomeList>
+        )}
+      </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.secondary,
   },
-  containerList: {
-    flex: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: 50,
-  },
-  logoutButton: {
+  formInput: {
     backgroundColor: 'white',
-    borderColor: colors.primary,
-    borderWidth: 2,
-    marginTop: 5,
-    width: '40%',
-    padding: 15,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
     borderRadius: 10,
+    marginTop: 5,
+  },
+  view: {
+    marginBottom: 10,
+    width: '100%',
+    height: '100%',
     alignItems: 'center',
   },
   button: {
@@ -116,45 +88,21 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   text: {
-    color: colors.primary,
-    fontSize: 25,
-    textAlign: 'center',
+    color: colors.heading,
+    fontSize: 20,
+    alignItems: 'center',
   },
-  text2: {
-    color: colors.primary,
-    fontSize: 30,
-    paddingTop: 20,
-    paddingLeft: 5,
-  },
-  title: {
-    color: colors.primary,
-    fontSize: 40,
-    textAlign: 'center',
-  },
-  listItem: {
-    backgroundColor: colors.accent,
-    padding: 20,
-    marginVertical: 8,
-  },
-  addGroup: {
-    backgroundColor: 'white',
-    borderColor: colors.primary,
-    borderWidth: 2,
-    marginTop: 5,
-    width: '40%',
+  button: {
+    marginTop: 20,
+    marginBottom: 20,
+    width: '50%',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
+    backgroundColor: colors.primary,
   },
-  scrollView: {
-    backgroundColor: colors.secondary,
-    marginBottom: 10,
-    marginTop: 10,
-    width: '100%',
-    height: '100%',
-  },
-  containerTable: {
-    paddingTop: 10,
-    paddingHorizontal: 30,
+  textButton: {
+    color: 'white',
+    fontSize: 20,
   },
 });
