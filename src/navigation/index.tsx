@@ -1,4 +1,9 @@
-import { AntDesign, Feather, FontAwesome, FontAwesome5 } from '@expo/vector-icons';
+import {
+  AntDesign,
+  Feather,
+  FontAwesome,
+  FontAwesome5,
+} from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -9,6 +14,7 @@ import { Costs } from '../screens/Costs';
 import { CreateGroup } from '../screens/CreateGroup';
 import { Home } from '../screens/Home';
 import { Notifications } from '../screens/Notifications';
+import { ToDoListPage } from '../screens/To-do';
 
 export default function Navigation() {
   return (
@@ -19,13 +25,14 @@ export default function Navigation() {
 }
 
 const TAB_ICONS: {
-  [key: string]: JSX.Element
+  [key: string]: JSX.Element;
 } = {
   Home: <AntDesign name={'home'} />,
-  Notifications: <FontAwesome5 name="bell" />,
+  Notifications: <FontAwesome5 name='bell' />,
   Costs: <FontAwesome name='dollar' />,
-  Add: <AntDesign name='pluscircleo'/>
-}
+  Add: <AntDesign name='pluscircleo' />,
+  ToDoList: <AntDesign name='checkcircle' />,
+};
 
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
@@ -34,21 +41,28 @@ const TAB_ICONS: {
 const Stack = createNativeStackNavigator();
 
 function RootNavigator() {
-
   const auth = useAuth();
 
   const isLogged = auth?.user;
 
   return (
     <Stack.Navigator>
-      {
-        isLogged ?
-          <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-        :
-          <Stack.Screen name='AuthScreen' component={AuthScreen} options={{ headerShown: false }} />
-      }
-      <Stack.Screen name="Create" component={CreateGroup}/>
-      <Stack.Screen name="Home" component={Home}/>
+      {isLogged ? (
+        <Stack.Screen
+          name='Root'
+          component={BottomTabNavigator}
+          options={{ headerShown: false }}
+        />
+      ) : (
+        <Stack.Screen
+          name='AuthScreen'
+          component={AuthScreen}
+          options={{ headerShown: false }}
+        />
+      )}
+      <Stack.Screen name='Create' component={CreateGroup} />
+      <Stack.Screen name='Home' component={Home} />
+      <Stack.Screen name='ToDoList' component={ToDoListPage} />
     </Stack.Navigator>
   );
 }
@@ -59,11 +73,11 @@ function BottomTabNavigator() {
   return (
     <BottomTab.Navigator>
       <BottomTab.Screen
-        name="Home"
+        name='Home'
         component={Home}
         options={{
           headerShown: false,
-          tabBarIcon: () => getTabIcon('Home')
+          tabBarIcon: () => getTabIcon('Home'),
         }}
       />
       <BottomTab.Screen
@@ -71,7 +85,7 @@ function BottomTabNavigator() {
         component={Notifications}
         options={{
           headerShown: false,
-          tabBarIcon: () => getTabIcon('Notifications')
+          tabBarIcon: () => getTabIcon('Notifications'),
         }}
       />
       <BottomTab.Screen
@@ -79,7 +93,15 @@ function BottomTabNavigator() {
         component={Costs}
         options={{
           headerShown: false,
-          tabBarIcon: () => getTabIcon('Costs')
+          tabBarIcon: () => getTabIcon('Costs'),
+        }}
+      />
+      <BottomTab.Screen
+        name='To Do List'
+        component={ToDoListPage}
+        options={{
+          headerShown: false,
+          tabBarIcon: () => getTabIcon('ToDoList'),
         }}
       />
     </BottomTab.Navigator>
