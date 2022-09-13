@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { UserService } from "../../backend/services/user.service";
 import { colors } from "../../constants/Colors";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -9,6 +10,7 @@ export const AuthScreen: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const auth = useAuth();
+    const userService = new UserService();
 
     const handleLogin = async () => {
         auth?.login(email, password);
@@ -17,6 +19,19 @@ export const AuthScreen: React.FC = () => {
     const handleRegister = async () => {
         auth?.register(email, password);
     }
+
+    const testFirestore = async () => {
+        console.log('user:', await userService.getUser('jyleHYnMhUenUtuubuli'));
+        console.log('All users:', await userService.getAllUsers());
+        console.log('create:', await userService.createUser({ 
+            id: 'BzVUzqLeSeTgGz9JUaj3Xk5LyTo2',
+            email: 'sabrina@teste.com',
+            name: 'Sabrina Teste',
+        }));
+        console.log('user:', await userService.getUserByEmail('sabrina@teste.com'));
+    }
+
+    //testFirestore()
 
     return (
         <KeyboardAvoidingView
