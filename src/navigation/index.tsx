@@ -6,6 +6,7 @@ import * as React from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthScreen } from '../screens/AuthScreen';
 import { Costs } from '../screens/Costs';
+import { CreateGroup } from '../screens/CreateGroup';
 import { Home } from '../screens/Home';
 import { Notifications } from '../screens/Notifications';
 
@@ -22,7 +23,8 @@ const TAB_ICONS: {
 } = {
   Home: <AntDesign name={'home'} />,
   Notifications: <FontAwesome5 name="bell" />,
-  Costs: <FontAwesome name='dollar' />
+  Costs: <FontAwesome name='dollar' />,
+  Add: <AntDesign name='pluscircleo'/>
 }
 
 /**
@@ -45,6 +47,8 @@ function RootNavigator() {
         :
           <Stack.Screen name='AuthScreen' component={AuthScreen} options={{ headerShown: false }} />
       }
+      <Stack.Screen name="Create" component={CreateGroup}/>
+      <Stack.Screen name="Home" component={Home}/>
     </Stack.Navigator>
   );
 }

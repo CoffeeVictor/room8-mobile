@@ -29,7 +29,10 @@ if (getApps().length < 1) {
     persistence: getReactNativePersistence(AsyncStorage),
   });
   db = getFirestore(app);
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/dev
 } else {
   app = getApp();
   auth = getAuth();
