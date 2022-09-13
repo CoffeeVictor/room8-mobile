@@ -14,10 +14,10 @@ export class UserService {
 
       if (data === null || data === undefined) return null;
 
-      return { userDocID, ...data };
+      return data;
       
     } catch (e) {
-      return e;
+      console.error("getUser", e);
     }
      
   };
@@ -33,14 +33,14 @@ export class UserService {
       });
       
     } catch (e) {
-      return e;
+      console.error("getAllUsers", e);
     }
   };
 
-  public getUserByEmail = async (email: String) => {
+  public getUserByEmail = async (email: string) => {
     
     try {
-      return await userRepository.getUserByEmail(email)
+      return await userRepository.getUserBy('email', email)
         .then(users => {
           let usersData: any[] = [];
           users.forEach(doc => usersData.push( doc.data() ? doc.data() : { } ));
@@ -48,7 +48,23 @@ export class UserService {
       });
       
     } catch (e) {
-      return e;
+      console.error("getUserByEmail", e);
+    }
+    
+  };
+
+  public getUsersByGroup = async (groupDocID: string) => {
+    
+    try {
+      return await userRepository.getUserBy('group', groupDocID)
+        .then(users => {
+          let usersData: any[] = [];
+          users.forEach(doc => usersData.push( doc.data() ? doc.data() : { } ));
+          return usersData;
+      });
+      
+    } catch (e) {
+      console.error("getUsersByGroup", e);
     }
     
   };
@@ -61,7 +77,22 @@ export class UserService {
           console.log('User added!');
         });
     } catch (e) {
-      return e;
+      console.error("createUser", e);
+    }
+  };
+
+  public addGroupToUser = async (groupDocID: string, usersDocID: string) => {
+    
+    try {
+
+      return await userRepository.updateUser(usersDocID, {
+        group: groupDocID
+      })
+        .then(() => {
+          console.log('Group added!');
+        });
+    } catch (e) {
+      console.error("addGroupToUser", e);
     }
   };
   

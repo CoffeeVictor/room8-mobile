@@ -1,4 +1,4 @@
-import { collection, addDoc, getDoc, getDocs, doc, DocumentSnapshot, DocumentData, QuerySnapshot, setDoc, query, where, Query } from "firebase/firestore";
+import { collection, addDoc, getDoc, getDocs, doc, DocumentSnapshot, DocumentData, QuerySnapshot, setDoc, query, where, Query, updateDoc } from "firebase/firestore";
 import { db } from '../../config/firebase';
 import { IUser } from '../models/User';
 
@@ -13,14 +13,18 @@ export class UserRepository {
     return await getDocs(usersCollection);
   };
 
-  public getUserByEmail = async (email: String): Promise<QuerySnapshot<DocumentData>> => {
-    const q = query(usersCollection, where("email", "==", email));
+  public getUserBy = async (param: String, paramValue: String): Promise<QuerySnapshot<DocumentData>> => {
+    const q = query(usersCollection, where(`${param}`, "==", paramValue));
     return await getDocs(q);
   };
 
   public createUser = async (newUser: IUser) => {
     let {id, ...newUserM} = newUser;
     return await setDoc(doc(usersCollection, newUser.id), newUserM);
+  };
+
+  public updateUser = async (userDocID: string, updateObj: any) => {
+    return await updateDoc(doc(usersCollection, userDocID), updateObj, { merge: true });
   };
   
 }
