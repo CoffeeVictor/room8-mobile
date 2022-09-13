@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import {
   KeyboardAvoidingView,
@@ -8,29 +7,32 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { GroupService } from '../../backend/services/group.service';
-import { UserService } from '../../backend/services/user.service';
 import { colors } from '../../constants/Colors';
 import { useAuth } from '../../contexts/AuthContext';
 
-export const AuthScreen: React.FC = () => {
+export const Register: React.FC = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [email, setEmail] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const auth = useAuth();
-  const navi = useNavigation();
-
-  const handleLogin = async () => {
-    auth?.login(email, password);
-  };
 
   const handleRegister = async () => {
-    navi.navigate('Register');
+    auth?.register(userName, email, password);
   };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
       <View style={styles.formContainer}>
+        <Text style={styles.registerHeader}>Register</Text>
+        <TextInput
+          style={styles.formInput}
+          placeholder={'Type your user name'}
+          keyboardType={'email-address'}
+          value={userName}
+          onChangeText={setUserName}
+          autoCapitalize={'none'}
+        />
         <TextInput
           style={styles.formInput}
           placeholder={'Type your email'}
@@ -49,9 +51,6 @@ export const AuthScreen: React.FC = () => {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-          <Text style={styles.loginText}>Login</Text>
-        </TouchableOpacity>
         <TouchableOpacity
           style={styles.registerButton}
           onPress={handleRegister}
@@ -85,18 +84,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 40,
   },
-  loginButton: {
-    backgroundColor: colors.primary,
-    width: '100%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  loginText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '700',
-  },
+
   registerButton: {
     backgroundColor: 'white',
     borderColor: colors.primary,
@@ -111,5 +99,12 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontSize: 16,
     fontWeight: '700',
+  },
+  registerHeader: {
+    color: colors.primary,
+    fontSize: 30,
+    fontWeight: '700',
+    marginLeft: 90,
+    marginBottom: 20,
   },
 });
