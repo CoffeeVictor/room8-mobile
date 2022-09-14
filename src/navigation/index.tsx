@@ -9,6 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useUser } from '../contexts/UserContext';
 import { AuthScreen } from '../screens/AuthScreen';
 import { Costs } from '../screens/Costs';
 import { CreateGroup } from '../screens/CreateGroup';
@@ -42,8 +43,20 @@ const Stack = createNativeStackNavigator();
 
 function RootNavigator() {
   const auth = useAuth();
+  // const userContext = useUser();
 
   const isLogged = auth?.user;
+
+  // const test = async () => {
+  //   //console.log("loggedUser: ", isLogged)
+  //   if (isLogged) await userContext?.setActiveUser(isLogged.uid);
+  //   console.log("user: ", userContext?.user)
+
+  //   console.log("allUsers: ", await userContext?.getAllUsers())
+  // }
+
+  //test();
+  
 
   return (
     <Stack.Navigator>
