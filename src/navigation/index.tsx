@@ -16,6 +16,7 @@ import { Home } from '../screens/Home';
 import { Notifications } from '../screens/Notifications';
 import { Register } from '../screens/Register';
 import { ToDoListPage } from '../screens/To-do';
+import { CreatTask } from '../screens/To-do/CreatTask';
 
 export default function Navigation() {
   return (
@@ -48,6 +49,7 @@ function RootNavigator() {
 
   return (
     <Stack.Navigator>
+      {console.log(isLogged)}
       {isLogged ? (
         <Stack.Screen
           name='Root'
@@ -61,10 +63,41 @@ function RootNavigator() {
           options={{ headerShown: false }}
         />
       )}
-      <Stack.Screen name='Create' component={CreateGroup} />
-      <Stack.Screen name='Home' component={Home} />
-      <Stack.Screen name='ToDoList' component={ToDoListPage} />
-      <Stack.Screen name='Register' component={Register} />
+      <Stack.Screen
+        name='Create'
+        component={CreateGroup}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name='Home'
+        component={Home}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name='ToDoList'
+        component={ToDoListPage}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name='CreatTask'
+        component={CreatTask}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name='Register'
+        component={Register}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack.Navigator>
   );
 }

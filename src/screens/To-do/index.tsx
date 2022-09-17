@@ -3,6 +3,7 @@ import { TopBar } from '../../components/TobBar';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import TodoList from './ItemList';
 import { colors } from '../../constants/Colors';
+import { useNavigation } from '@react-navigation/native';
 
 export const ToDoListPage: React.FC = () => {
   const [list] = useState([
@@ -12,6 +13,7 @@ export const ToDoListPage: React.FC = () => {
 
   const handelDeleteTask = () => {};
   const handelSelectTask = () => {};
+  const navi = useNavigation();
 
   useEffect(() => {}, []);
   return (
@@ -29,7 +31,12 @@ export const ToDoListPage: React.FC = () => {
             ></TodoList>
           ))}
         </View>
-        <TouchableOpacity style={styles.SubmitButton} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.SubmitButton}
+          onPress={() => {
+            navi.navigate('CreatTask');
+          }}
+        >
           <Text style={styles.TextBottom}>Creat Task</Text>
         </TouchableOpacity>
       </View>

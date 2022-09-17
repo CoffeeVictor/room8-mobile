@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import {
   KeyboardAvoidingView,
@@ -16,9 +17,11 @@ export const Register: React.FC = () => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const auth = useAuth();
+  const navi = useNavigation();
 
   const handleRegister = async () => {
-    auth?.register(userName, email, password);
+    await auth?.register(userName, email, password);
+    navi.navigate('Home');
   };
 
   return (
