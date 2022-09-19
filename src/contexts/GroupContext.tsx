@@ -1,8 +1,9 @@
-import { arrayUnion} from "firebase/firestore";
+import { arrayRemove, arrayUnion } from "firebase/firestore";
 import { useUser } from "./UserContext";
 import { IGroup } from "../backend/models/group";
 import { GroupRepository } from "../backend/repositories/groupRepository";
 import { createContext, useContext, useState } from "react";
+import { CostItemDTO } from "../components/CostItem";
 
 interface IGroupValue {
   group: IGroup | null,
@@ -12,6 +13,8 @@ interface IGroupValue {
   getGroupByUser: (userDocID: string) => Promise<IGroup | null | undefined>,
   createGroup: (newGroup: IGroup) => Promise<void>,
   addUserToGroup: (groupDocID: string, usersDocID: string[]) => Promise<void>,
+  addCostItemToGroup: (groupDocID: string, item: CostItemDTO) => Promise<void>,
+  deleteCostItemById: (groupDocID: string, costItem: CostItemDTO) => Promise<void>,
 }
 
 const GroupContext = createContext<IGroupValue | null>(null);
@@ -115,6 +118,26 @@ export const GroupProvider: React.FC = ({children}) => {
     }
   };
 
+  const addCostItemToGroup = async (groupDocID: string, item: CostItemDTO) => {
+    try {
+      return await groupRepository.updateGroup(groupDocID, {
+        costList: arrayUnion(item)
+      });
+    } catch (e) {
+      console.error("addCostItemToGroup", e);
+    }
+  }
+
+  const deleteCostItemById = async (groupDocID: string, costItem: CostItemDTO) => {
+    try {
+      return await groupRepository.updateGroup(groupDocID, {
+        costList: arrayRemove(costItem)
+      });
+    } catch (e) {
+      console.error("deleteCostItemById", e)
+    }
+  }
+
   const value = {
     group,
     setActiveGroup,
@@ -123,6 +146,8 @@ export const GroupProvider: React.FC = ({children}) => {
     getGroupByUser,
     createGroup,
     addUserToGroup,
+    addCostItemToGroup,
+    deleteCostItemById
   }
 
   return (
