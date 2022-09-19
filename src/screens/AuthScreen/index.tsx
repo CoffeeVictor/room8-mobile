@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { GroupService } from "../../backend/services/group.service";
+import { UserService } from "../../backend/services/user.service";
 import { colors } from "../../constants/Colors";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -17,6 +19,34 @@ export const AuthScreen: React.FC = () => {
     const handleRegister = async () => {
         auth?.register(email, password);
     }
+
+    // const testFirestore = async () => {
+
+    //     const userService = new UserService();
+
+    //     console.log('user:', await userService.getUser('jyleHYnMhUenUtuubuli'));
+    //     console.log('All users:', await userService.getAllUsers());
+    //     console.log('create:', await userService.createUser({ 
+    //         id: 'BzVUzqLeSeTgGz9JUaj3Xk5LyTo2',
+    //         email: 'sabrina@teste.com',
+    //         name: 'Sabrina Teste',
+    //     }));
+    //     console.log('user:', await userService.getUserByEmail('sabrina@teste.com'));
+
+        
+    //     const groupService = new GroupService();
+    //     console.log('group:', await groupService.getGroup('wOMYmmxmc4Lr0WjtTQt0'));
+    //     console.log('All groups:', await groupService.getAllGroups());
+    //     console.log('create:', await groupService.createGroup({
+    //         name: 'Grupo Teste',
+    //         users: [],
+    //     }));
+        
+    //     console.log('group:', await groupService.addUserToGroup('Zrm0kLLz4Ld0cZLaiqcU', ['BzVUzqLeSeTgGz9JUaj3Xk5LyTo2']));
+    //     console.log('group:', await groupService.getGroupByUser('BzVUzqLeSeTgGz9JUaj3Xk5LyTo2'));
+    // }
+
+    // testFirestore()
 
     return (
         <KeyboardAvoidingView

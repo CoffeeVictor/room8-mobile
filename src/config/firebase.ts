@@ -16,7 +16,7 @@ const firebaseConfig: FirebaseOptions = {
   databaseURL: "https://dev-room8-default-rtdb.firebaseio.com",
   storageBucket: "dev-room8.appspot.com",
   messagingSenderId: "472465191768",
-  appId: "1:472465191768:web:65e244c8e674bbbf7eab2d"
+  appId: "1:472465191768:web:65e244c8e674bbbf7eab2d",
 };
 
 // Initialize Firebase
@@ -29,6 +29,7 @@ if (getApps().length < 1) {
     persistence: getReactNativePersistence(AsyncStorage),
   });
   db = getFirestore(app);
+
 } else {
   app = getApp();
   auth = getAuth();
