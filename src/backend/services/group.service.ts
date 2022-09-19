@@ -1,4 +1,5 @@
-import { arrayUnion} from "firebase/firestore";
+import { arrayRemove, arrayUnion } from "firebase/firestore";
+import { CostItemDTO } from "../../components/CostItem";
 import { IGroup } from "../models/group";
 import { GroupRepository } from "../repositories/group.repository";
 import { UserService } from "./user.service";
@@ -87,4 +88,23 @@ export class GroupService {
     }
   };
   
+  public addCostItemToGroup = async (groupDocID: string, item: CostItemDTO) => {
+    try {
+      return await groupRepository.updateGroup(groupDocID, {
+        costList: arrayUnion(item)
+      });
+    } catch (e) {
+      console.error("addCostItemToGroup", e);
+    }
+  }
+
+  public deleteCostItemById = async (groupDocID: string, costItem: CostItemDTO) => {
+    try {
+      return await groupRepository.updateGroup(groupDocID, {
+        costList: arrayRemove(costItem)
+      });
+    } catch (e) {
+      console.error("deleteCostItemById", e)
+    }
+  }
 }
