@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TopBar } from '../../components/TobBar';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import TodoList from './ItemList';
+import { Product } from './ItemList';
 import { colors } from '../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 
@@ -17,11 +17,11 @@ export const ShoppingList: React.FC = () => {
         <View>
           <Text style={styles.textHeader}>Shopping List</Text>
           {list.map((item) => (
-            <TodoList
+            <Product
               item={item}
               key={item.value}
               deleteItem={handleDeleteTask()}
-            ></TodoList>
+            ></Product>
           ))}
         </View>
         <TouchableOpacity
