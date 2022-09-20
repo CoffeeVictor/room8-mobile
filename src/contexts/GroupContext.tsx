@@ -11,7 +11,7 @@ interface IGroupValue {
   getGroup: (groupDocID: string) => Promise<IGroup | null | undefined>,
   getAllGroups: () => Promise<any[] | undefined>,
   getGroupByUser: (userDocID: string) => Promise<IGroup | null | undefined>,
-  createGroup: (newGroup: IGroup) => Promise<void>,
+  createGroup: (newGroup: IGroup) => Promise<string | undefined>,
   addUserToGroup: (groupDocID: string, usersDocID: string[]) => Promise<void>,
   addCostItemToGroup: (groupDocID: string, item: CostItemDTO) => Promise<void>,
   deleteCostItemById: (groupDocID: string, costItem: CostItemDTO) => Promise<void>,
@@ -34,6 +34,10 @@ export const GroupProvider: React.FC = ({children}) => {
     const activeGroup = await getGroupByUser(userDocID);
 
     if (activeGroup) {
+
+      const user = await userContext?.getUser(userDocID);
+      activeGroup.id = user?.group;
+      console.log('set current group', activeGroup);
       setGroup(activeGroup);
     }
 
@@ -94,9 +98,7 @@ export const GroupProvider: React.FC = ({children}) => {
     
     try {
       return await groupRepository.createGroup(newGroup)
-        .then(() => {
-          console.log('Group created!');
-        });
+        .then(response => response?.id);
     } catch (e) {
       console.error("createGroup", e);
     }

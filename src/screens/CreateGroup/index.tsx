@@ -4,20 +4,23 @@ import { useEffect, useState } from "react";
 import { db, firestore } from "../../config/firebase";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../contexts/AuthContext";
+import { useGroup } from "../../contexts/GroupContext";
+import { useUser } from "../../contexts/UserContext";
 
 export const CreateGroup: React.FC = () => {
 
+    const auth = useAuth();
+    const groupContext = useGroup();
+    const userContext = useUser();
     const [groupName,setGroupName] = useState('');
+    const navi = useNavigation();
 
-    const groupRef = firestore.collection(db,'Groups')
+    const onCreateButtonPress = async () => {
 
-    const navi = useNavigation()
-
-    const auth = useAuth()
-
-    const user = auth?.user?.uid
-
-    const onAddButtonPress = () => {
+        const user = auth?.user?.uid;
+        
+        if (!user) return;
+        
         let users = [user];
         let items = [''];
         if (groupName && groupName.length > 0) {
@@ -26,11 +29,17 @@ export const CreateGroup: React.FC = () => {
                 users: users,
                 items: items
             };
-            firestore.addDoc(groupRef,data).then(_doc =>{
-                setGroupName('');
-                console.log(data);
-                navi.goBack()
-            });
+            const group = await groupContext?.createGroup(data)
+
+            if (!group) return;
+            console.log('group id:', group);
+
+            await userContext?.addGroupToUser(group, user)
+                .then(_doc => {
+                        setGroupName('');
+                        console.log(_doc);
+                        navi.goBack()
+                    });
         }
     }
 
@@ -47,7 +56,7 @@ export const CreateGroup: React.FC = () => {
                 />
             </View>
             <View style={styles.buttonArea}>
-                <TouchableOpacity style={styles.createGroupButton} onPress={onAddButtonPress}>
+                <TouchableOpacity style={styles.createGroupButton} onPress={onCreateButtonPress}>
                     <Text style={styles.createGroupText}>
                         Create Group
                     </Text>
