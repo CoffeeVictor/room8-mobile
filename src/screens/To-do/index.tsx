@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { TopBar } from '../../components/TobBar';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import TodoList from './ItemList';
+import { TodoList } from './ItemList';
 import { colors } from '../../constants/Colors';
 
 export const ToDoListPage: React.FC = () => {
-  const [list] = useState([
-    { value: 'Clean the table', people: 'Maely' },
-    { value: 'Clean the bathroom', people: 'Rodrigues' },
-  ]);
+  const [list] = useState([]);
 
   const handleDeleteTask = () => {};
   const handleSelectTask = () => {};
@@ -24,8 +21,8 @@ export const ToDoListPage: React.FC = () => {
             <TodoList
               item={item}
               key={item.value}
-              deleteItem={handleDeleteTask()}
-              selectItem={handleSelectTask()}
+              deleteItem={handleDeleteTask}
+              selectItem={handleSelectTask}
             ></TodoList>
           ))}
         </View>

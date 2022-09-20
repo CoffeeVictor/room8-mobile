@@ -4,10 +4,20 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../../constants/Colors';
 import { Checkbox } from 'react-native-paper';
 
-export default function TodoList({ item, deleteItem, selectItem }) {
+interface Item {
+  value: string;
+  people: string;
+}
+interface TodoProps {
+  item: Item;
+  deleteItem: Function;
+  selectItem: Function;
+}
+
+export const TodoList = ({ item, deleteItem, selectItem }: TodoProps) => {
   const [isSelected, setSelection] = useState(false);
   return (
-    <View style={styles.ListContainer}>
+    <View style={styles.listContainer}>
       <Checkbox
         status={isSelected ? 'checked' : 'unchecked'}
         onPress={() => {
@@ -17,21 +27,21 @@ export default function TodoList({ item, deleteItem, selectItem }) {
         color={colors.primary}
       />
       <View>
-        <Text style={styles.TextItem}>{item?.value}</Text>
-        <Text style={styles.TextDate}> {item?.people}</Text>
+        <Text style={styles.textItem}>{item?.value}</Text>
+        <Text style={styles.textDate}> {item?.people}</Text>
       </View>
       <TouchableOpacity
-        style={styles.IconContainer}
-        onPress={() => deleteItem(item?.key)}
+        style={styles.iconContainer}
+        onPress={() => deleteItem()}
       >
         <MaterialIcons name='delete' size={24} color={colors.primary} />
       </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  ListContainer: {
+  listContainer: {
     backgroundColor: 'white',
     height: 'auto',
     width: 350,
@@ -41,14 +51,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 
-  ComponentContainer: {
+  componentContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     height: 'auto',
     width: 'auto',
   },
 
-  TextItem: {
+  textItem: {
     color: colors.heading,
     width: 260,
     height: 'auto',
@@ -57,7 +67,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
 
-  TextDate: {
+  textDate: {
     color: colors.primary,
     fontSize: 15,
     marginRight: 20,
@@ -65,7 +75,7 @@ const styles = StyleSheet.create({
     width: 100,
   },
 
-  IconContainer: {
+  iconContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
@@ -74,7 +84,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  CirlceContainer: {
+  cirlceContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     paddingLeft: 5,

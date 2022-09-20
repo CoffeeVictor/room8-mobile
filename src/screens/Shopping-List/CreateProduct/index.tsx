@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { TopBar } from '../../../components/TobBar';
 import {
@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import Product from '../ItemList';
+import { Product } from '../ItemList';
 import { colors } from '../../../constants/Colors';
 
 export const CreatProduct: React.FC = () => {
@@ -16,20 +16,21 @@ export const CreatProduct: React.FC = () => {
   const [quantity, setQuantity] = useState(0);
   const [list, setList] = useState([]);
 
-  const onChangeValue = (text) => {
+  const onChangeValue = (text: string) => {
     setValue(text);
   };
-  const onChangeQuantity = (num) => {
-    setQuantity(num);
+  const onChangeQuantity = (num: string) => {
+    const num2 = parseInt(num);
+    setQuantity(num2);
   };
 
-  const handleCreateTask = () => {
+  const handleCreateTask = useCallback(() => {
     const task = { value: value, quantity: quantity };
-    setList([...list, task]);
-  };
+    setList((list) => [...list, task]);
+  }, [list]);
 
   const handleDeleteProduct = () => {};
-  useEffect(() => {}, [list]);
+
   return (
     <View>
       <TopBar></TopBar>
@@ -39,7 +40,7 @@ export const CreatProduct: React.FC = () => {
         </View>
         <View>
           {list.map((item) => {
-            <Product item={item} deleteItem={handleDeleteProduct()}></Product>;
+            <Product item={item} deleteItem={handleDeleteProduct}></Product>;
           })}
         </View>
         <View style={styles.inputContainer}>

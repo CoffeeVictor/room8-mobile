@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import TodoList from '../ItemList';
+import { TodoList } from '../ItemList';
 import { colors } from '../../../constants/Colors';
 
 export const CreatTask: React.FC = () => {
@@ -18,20 +18,21 @@ export const CreatTask: React.FC = () => {
     { value: 'Clean the table', people: 'Maely' },
   ]);
 
-  const onChangeValue = (text) => {
+  const onChangeValue = (text: string) => {
     setValue(text);
   };
-  const onChangePeople = (text) => {
+  const onChangePeople = (text: string) => {
     setPeople(text);
   };
 
-  const handelCreatTask = () => {
+  const handleCreatTask = () => {
     const task = { value: value, people: people };
     setList([...list, task]);
   };
 
-  const handelDeleteTask = () => {};
-  useEffect(() => {}, [list]);
+  function handleDeleteTask() {}
+  function handleSelectTask() {}
+
   return (
     <View>
       <TopBar></TopBar>
@@ -41,7 +42,11 @@ export const CreatTask: React.FC = () => {
         </View>
         <View>
           {list.map((item) => {
-            <TodoList item={item} deleteItem={handelDeleteTask()}></TodoList>;
+            <TodoList
+              item={item}
+              deleteItem={handleDeleteTask}
+              selectItem={handleSelectTask}
+            ></TodoList>;
           })}
         </View>
         <View style={styles.InputContainer}>
@@ -59,7 +64,7 @@ export const CreatTask: React.FC = () => {
         <TouchableOpacity
           style={styles.SubmitButton}
           onPress={() => {
-            handelCreatTask();
+            handleCreatTask();
           }}
         >
           <AntDesign name='plus' size={24} color='white' />

@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export const ShoppingList: React.FC = () => {
   const navi = useNavigation();
-  const [list] = useState([]);
+  const list = useState([]);
 
   const handleDeleteTask = () => {};
   return (
@@ -16,7 +16,7 @@ export const ShoppingList: React.FC = () => {
       <View style={styles.view}>
         <View>
           <Text style={styles.textHeader}>Shopping List</Text>
-          {list.map((item) => (
+          {list?.map((item) => (
             <Product
               item={item}
               key={item.value}
