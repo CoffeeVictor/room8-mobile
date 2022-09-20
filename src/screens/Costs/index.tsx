@@ -17,6 +17,8 @@ interface ICostRecord {
 export const Costs: React.FC = () => {
 
     const auth = useAuth() as IAuthValue;
+    const groupContext = useGroup();
+    const userContext = useUser();
     const [groupCosts, setGroupCosts] = useState<CostItemDTO[]>();
     const [newItemName, setNewItemName] = useState<string>();
     const [newItemValue, setNewItemValue] = useState<string>();
@@ -25,8 +27,6 @@ export const Costs: React.FC = () => {
         const userId = auth.user?.uid;
 
         if(!userId) return;
-
-        const groupContext = useGroup();
 
         const userGroup = await groupContext?.getGroupByUser(userId);
 
@@ -48,8 +48,6 @@ export const Costs: React.FC = () => {
             return;
         }
 
-        const groupContext = useGroup();
-
         const userGroup = await groupContext?.getGroupByUser(userId);
 
         const groupId = userGroup?.groupDocID;
@@ -69,8 +67,6 @@ export const Costs: React.FC = () => {
     }
 
     const handleDelete = async (item: CostItemDTO) => {
-
-        const groupContext = useGroup();
 
         const userId = auth?.user?.uid;
 
@@ -106,7 +102,6 @@ export const Costs: React.FC = () => {
 
             let resultString = '';
 
-            const userContext = useUser();
             const individualCost = totalCost / Object.keys(paymentRecord).length;
 
             for(let [key, value] of Object.entries(paymentRecord)) {

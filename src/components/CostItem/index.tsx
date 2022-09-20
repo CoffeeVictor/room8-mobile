@@ -20,10 +20,11 @@ export type CostItemDTO = {
 
 export const CostItem: React.FC<ICostItemProps> = (props) => {
 
+    const userContext = useUser();
     const [username, setUsername] = useState<string>();
 
     useEffect(() => {
-        const userContext = useUser();
+        
         userContext?.getUser(props.item.paid_by).then(user => {
             if(!user) return;
 
