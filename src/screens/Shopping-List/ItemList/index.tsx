@@ -3,7 +3,16 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../../constants/Colors';
 
-export const Product: React.FC = ({ item, deleteItem }) => {
+interface Item {
+  value: string;
+  quantity: number;
+}
+interface ProductProps {
+  item: Item;
+  deleteItem: Function;
+}
+
+export const Product = ({ item, deleteItem }: ProductProps) => {
   return (
     <View style={styles.listContainer}>
       <Text style={styles.textDate}> {item?.quantity}</Text>
