@@ -23,12 +23,12 @@ export const CreatProduct: React.FC = () => {
     setQuantite(num);
   };
 
-  const handelCreatTask = () => {
+  const handleCreateTask = () => {
     const task = { value: value, quantite: quantite };
     setList([...list, task]);
   };
 
-  const handelDeleteProduct = () => {};
+  const handleDeleteProduct = () => {};
   useEffect(() => {}, [list]);
   return (
     <View>
@@ -39,7 +39,7 @@ export const CreatProduct: React.FC = () => {
         </View>
         <View>
           {list.map((item) => {
-            <Product item={item} deleteItem={handelDeleteProduct()}></Product>;
+            <Product item={item} deleteItem={handleDeleteProduct()}></Product>;
           })}
         </View>
         <View style={styles.InputContainer}>
@@ -57,7 +57,7 @@ export const CreatProduct: React.FC = () => {
         <TouchableOpacity
           style={styles.SubmitButton}
           onPress={() => {
-            handelCreatTask();
+            handleCreateTask();
           }}
         >
           <AntDesign name='plus' size={24} color='white' />

@@ -13,8 +13,6 @@ export const ShoppingList: React.FC = () => {
   ]);
 
   const handelDeleteTask = () => {};
-
-  useEffect(() => {}, []);
   return (
     <View>
       <TopBar></TopBar>
