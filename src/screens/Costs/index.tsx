@@ -52,7 +52,7 @@ export const Costs: React.FC = () => {
 
         const userGroup = await groupContext?.getGroupByUser(userId);
 
-        const groupId = userGroup?.groupDocID;
+        const groupId = userGroup?.id;
 
         if(!groupId || !newItemName || !newItemValue) return;
 
@@ -76,7 +76,7 @@ export const Costs: React.FC = () => {
 
         const userGroup = await groupContext?.getGroupByUser(userId);
 
-        const userGroupId = userGroup?.groupDocID;
+        const userGroupId = userGroup?.id;
 
         if(!userGroupId) return;
 
