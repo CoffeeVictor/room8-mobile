@@ -3,12 +3,12 @@ import { Timestamp } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { ActivityIndicator } from "react-native-paper"
-import { GroupService } from "../../backend/services/group.service"
-import { UserService } from "../../backend/services/user.service"
 import { CostItem, CostItemDTO } from "../../components/CostItem"
 import { TopBar } from "../../components/TobBar"
 import { colors } from "../../constants/Colors"
 import { IAuthValue, useAuth } from "../../contexts/AuthContext"
+import { useGroup } from "../../contexts/GroupContext"
+import { useUser } from "../../contexts/UserContext"
 
 interface ICostRecord {
     [key: string]: number;
@@ -17,6 +17,8 @@ interface ICostRecord {
 export const Costs: React.FC = () => {
 
     const auth = useAuth() as IAuthValue;
+    const groupContext = useGroup();
+    const userContext = useUser();
     const [groupCosts, setGroupCosts] = useState<CostItemDTO[]>();
     const [newItemName, setNewItemName] = useState<string>();
     const [newItemValue, setNewItemValue] = useState<string>();
@@ -26,9 +28,9 @@ export const Costs: React.FC = () => {
 
         if(!userId) return;
 
-        const groupService = new GroupService();
+        const userGroup = await groupContext?.getGroupByUser(userId);
 
-        const userGroup = await groupService.getGroupByUser(userId);
+        if(!userGroup) return;
 
         //@ts-ignore Bad Typing
         setGroupCosts(userGroup.costList) 
@@ -48,9 +50,7 @@ export const Costs: React.FC = () => {
             return;
         }
 
-        const groupService = new GroupService();
-
-        const userGroup = await groupService.getGroupByUser(userId);
+        const userGroup = await groupContext?.getGroupByUser(userId);
 
         const groupId = userGroup?.groupDocID;
 
@@ -58,7 +58,7 @@ export const Costs: React.FC = () => {
 
         setGroupCosts(undefined);
 
-        await groupService.addCostItemToGroup(groupId, {
+        await groupContext?.addCostItemToGroup(groupId, {
             created_at: Timestamp.fromDate(new Date()).seconds,
             name: newItemName,
             paid_by: userId,
@@ -70,19 +70,17 @@ export const Costs: React.FC = () => {
 
     const handleDelete = async (item: CostItemDTO) => {
 
-        const groupService = new GroupService();
-
         const userId = auth?.user?.uid;
 
         if(!userId) return;
 
-        const userGroup = await groupService.getGroupByUser(userId);
+        const userGroup = await groupContext?.getGroupByUser(userId);
 
         const userGroupId = userGroup?.groupDocID;
 
         if(!userGroupId) return;
 
-        await groupService.deleteCostItemById(userGroupId, item);
+        await groupContext?.deleteCostItemById(userGroupId, item);
 
         fetchUserGroupCosts();
     }
@@ -106,12 +104,11 @@ export const Costs: React.FC = () => {
 
             let resultString = '';
 
-            const userService = new UserService();
             const individualCost = totalCost / Object.keys(paymentRecord).length;
 
             for(let [key, value] of Object.entries(paymentRecord)) {
 
-                const username = (await userService.getUser(String(key)))?.name;
+                const username = (await userContext?.getUser(String(key)))?.name;
 
                 const userCost = individualCost - value;
 

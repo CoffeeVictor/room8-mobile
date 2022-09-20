@@ -2,8 +2,8 @@ import { Feather } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
-import { UserService } from "../../backend/services/user.service";
 import { colors } from "../../constants/Colors";
+import { useUser } from "../../contexts/UserContext";
 
 interface ICostItemProps {
     item: CostItemDTO,
@@ -20,11 +20,12 @@ export type CostItemDTO = {
 
 export const CostItem: React.FC<ICostItemProps> = (props) => {
 
+    const userContext = useUser();
     const [username, setUsername] = useState<string>();
 
     useEffect(() => {
-        const userService = new UserService();
-        userService.getUser(props.item.paid_by).then(user => {
+        
+        userContext?.getUser(props.item.paid_by).then(user => {
             if(!user) return;
 
             setUsername(user.name);

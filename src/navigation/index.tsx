@@ -42,7 +42,6 @@ const Stack = createNativeStackNavigator();
 
 function RootNavigator() {
   const auth = useAuth();
-
   const isLogged = auth?.user;
 
   return (

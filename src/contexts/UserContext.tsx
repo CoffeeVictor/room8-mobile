@@ -1,11 +1,42 @@
-import { IUser } from '../models/User';
-import { UserRepository } from "../repositories/user.repository";
+import { IUser } from '../backend/models/user';
+import { UserRepository } from "../backend/repositories/userRepository";
+import { createContext, useContext, useState } from "react";
+import { DocumentData } from 'firebase/firestore';
 
 const userRepository = new UserRepository();
 
-export class UserService {
+interface IUserValue {
+  user: any,
+  setActiveUser: (userDocID: string) => Promise<void>,
+  getUser: (userDocID: string) => Promise<DocumentData | null | undefined>,
+  getAllUsers: () => Promise<any[] | undefined>,
+  getUserByEmail: (email: string) => Promise<any[] | undefined>,
+  getUsersByGroup: (groupDocID: string) => Promise<any[] | undefined>,
+  createUser: (newUser: IUser) => Promise<void>,
+  addGroupToUser: (groupDocID: string, usersDocID: string) => Promise<void>,
+}
 
-  public getUser = async (userDocID: string) => {
+const UserContext = createContext<IUserValue | null>(null);
+
+export function useUser() {
+  return useContext(UserContext);
+}
+
+export const UserProvider: React.FC = ({children}) => {
+
+  const [user, setUser] = useState<any | null>(null);
+
+  const setActiveUser = async (userDocID: string) => {
+
+    const activeUser = await getUser(userDocID);
+
+    if (activeUser) {
+      setUser(activeUser)
+    }
+
+  }
+
+  const getUser = async (userDocID: string) => {
     
     try {
       const docSnap = await userRepository.getUser(userDocID);
@@ -22,7 +53,7 @@ export class UserService {
      
   };
 
-  public getAllUsers = async () => {
+  const getAllUsers = async () => {
     
     try {
       return await userRepository.getAllUsers()
@@ -37,7 +68,7 @@ export class UserService {
     }
   };
 
-  public getUserByEmail = async (email: string) => {
+  const getUserByEmail = async (email: string) => {
     
     try {
       return await userRepository.getUserBy('email', email)
@@ -53,7 +84,7 @@ export class UserService {
     
   };
 
-  public getUsersByGroup = async (groupDocID: string) => {
+  const getUsersByGroup = async (groupDocID: string) => {
     
     try {
       return await userRepository.getUserBy('group', groupDocID)
@@ -69,7 +100,7 @@ export class UserService {
     
   };
 
-  public createUser = async (newUser: IUser) => {
+  const createUser = async (newUser: IUser) => {
     
     try {
       return await userRepository.createUser(newUser)
@@ -81,7 +112,7 @@ export class UserService {
     }
   };
 
-  public addGroupToUser = async (groupDocID: string, usersDocID: string) => {
+  const addGroupToUser = async (groupDocID: string, usersDocID: string) => {
     
     try {
 
@@ -95,5 +126,21 @@ export class UserService {
       console.error("addGroupToUser", e);
     }
   };
-  
+
+  const value = {
+    user,
+    setActiveUser,
+    getUser,
+    getAllUsers,
+    getUserByEmail,
+    getUsersByGroup,
+    createUser,
+    addGroupToUser,
+  }
+
+  return (
+      <UserContext.Provider value={value}>
+          {children}
+      </UserContext.Provider>
+  )
 }
