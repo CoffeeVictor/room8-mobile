@@ -7,31 +7,28 @@ import { useNavigation } from '@react-navigation/native';
 
 export const ShoppingList: React.FC = () => {
   const navi = useNavigation();
-  const [list] = useState([
-    { value: 'Arroz', quantite: 2 },
-    { value: 'Leite', quantite: 8 },
-  ]);
+  const [list] = useState([]);
 
-  const handelDeleteTask = () => {};
+  const handleDeleteTask = () => {};
   return (
     <View>
       <TopBar></TopBar>
       <View style={styles.view}>
         <View>
-          <Text style={styles.TextHeader}>Shopping List</Text>
+          <Text style={styles.textHeader}>Shopping List</Text>
           {list.map((item) => (
             <TodoList
               item={item}
               key={item.value}
-              deleteItem={handelDeleteTask()}
+              deleteItem={handleDeleteTask()}
             ></TodoList>
           ))}
         </View>
         <TouchableOpacity
-          style={styles.SubmitButton}
+          style={styles.submitButton}
           onPress={() => navi.navigate('CreatProduct')}
         >
-          <Text style={styles.TextBottom}>Add Product</Text>
+          <Text style={styles.textBottom}>Add Product</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -46,7 +43,7 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
   },
-  SubmitButton: {
+  submitButton: {
     backgroundColor: colors.primary,
     width: '50%',
     padding: 15,
@@ -54,13 +51,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
   },
-  TextHeader: {
+  textHeader: {
     fontSize: 24,
     color: colors.heading,
     marginBottom: 20,
     marginLeft: 120,
   },
-  TextBottom: {
+  textBottom: {
     fontSize: 24,
     color: 'white',
   },
