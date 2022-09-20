@@ -30,6 +30,8 @@ export const Costs: React.FC = () => {
 
         const userGroup = await groupContext?.getGroupByUser(userId);
 
+        if(!userGroup) return;
+
         //@ts-ignore Bad Typing
         setGroupCosts(userGroup.costList) 
     }
