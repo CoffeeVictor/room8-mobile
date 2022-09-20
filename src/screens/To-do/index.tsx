@@ -10,8 +10,8 @@ export const ToDoListPage: React.FC = () => {
     { value: 'Clean the bathroom', people: 'Rodrigues' },
   ]);
 
-  const handelDeleteTask = () => {};
-  const handelSelectTask = () => {};
+  const handleDeleteTask = () => {};
+  const handleSelectTask = () => {};
 
   useEffect(() => {}, []);
   return (
@@ -24,13 +24,13 @@ export const ToDoListPage: React.FC = () => {
             <TodoList
               item={item}
               key={item.value}
-              deleteItem={handelDeleteTask()}
-              selectItem={handelSelectTask()}
+              deleteItem={handleDeleteTask()}
+              selectItem={handleSelectTask()}
             ></TodoList>
           ))}
         </View>
         <TouchableOpacity style={styles.SubmitButton} onPress={() => {}}>
-          <Text style={styles.TextBottom}>Creat Task</Text>
+          <Text style={styles.TextBottom}>Create Task</Text>
         </TouchableOpacity>
       </View>
     </View>
