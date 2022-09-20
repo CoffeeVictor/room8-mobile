@@ -13,18 +13,18 @@ import { colors } from '../../../constants/Colors';
 
 export const CreatProduct: React.FC = () => {
   const [value, setValue] = useState('');
-  const [quantite, setQuantite] = useState(0);
-  const [list, setList] = useState([{ value: 'Arroz', quantite: 2 }]);
+  const [quantity, setQuantity] = useState(0);
+  const [list, setList] = useState([]);
 
   const onChangeValue = (text) => {
     setValue(text);
   };
-  const onChangeQuantite = (num) => {
-    setQuantite(num);
+  const onChangeQuantity = (num) => {
+    setQuantity(num);
   };
 
   const handleCreateTask = () => {
-    const task = { value: value, quantite: quantite };
+    const task = { value: value, quantity: quantity };
     setList([...list, task]);
   };
 
@@ -35,27 +35,27 @@ export const CreatProduct: React.FC = () => {
       <TopBar></TopBar>
       <View style={styles.view}>
         <View>
-          <Text style={styles.TextHeader}> Adding To Shopping List</Text>
+          <Text style={styles.textHeader}> Adding To Shopping List</Text>
         </View>
         <View>
           {list.map((item) => {
             <Product item={item} deleteItem={handleDeleteProduct()}></Product>;
           })}
         </View>
-        <View style={styles.InputContainer}>
+        <View style={styles.inputContainer}>
           <TextInput
-            style={styles.Input}
+            style={styles.input}
             placeholder='Add Product...'
             onChangeText={onChangeValue}
           />
           <TextInput
-            style={styles.Input}
-            placeholder='Add Quantite...'
-            onChangeText={onChangeQuantite}
+            style={styles.input}
+            placeholder='Add Quantity...'
+            onChangeText={onChangeQuantity}
           />
         </View>
         <TouchableOpacity
-          style={styles.SubmitButton}
+          style={styles.submitButton}
           onPress={() => {
             handleCreateTask();
           }}
@@ -76,12 +76,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  InputContainer: {
+  inputContainer: {
     borderRadius: 10,
     marginTop: 20,
   },
 
-  Input: {
+  input: {
     fontSize: 20,
     backgroundColor: 'white',
     width: 300,
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  SubmitButton: {
+  submitButton: {
     backgroundColor: colors.primary,
     width: '30%',
     padding: 15,
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  TextHeader: {
+  textHeader: {
     fontSize: 24,
     color: colors.heading,
   },

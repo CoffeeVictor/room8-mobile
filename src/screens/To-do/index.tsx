@@ -19,7 +19,7 @@ export const ToDoListPage: React.FC = () => {
       <TopBar></TopBar>
       <View style={styles.view}>
         <View>
-          <Text style={styles.TextHeader}>To-Do List</Text>
+          <Text style={styles.textHeader}>To-Do List</Text>
           {list.map((item) => (
             <TodoList
               item={item}
@@ -29,8 +29,8 @@ export const ToDoListPage: React.FC = () => {
             ></TodoList>
           ))}
         </View>
-        <TouchableOpacity style={styles.SubmitButton} onPress={() => {}}>
-          <Text style={styles.TextBottom}>Create Task</Text>
+        <TouchableOpacity style={styles.submitButton} onPress={() => {}}>
+          <Text style={styles.textBottom}>Create Task</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
   },
-  SubmitButton: {
+  submitButton: {
     backgroundColor: colors.primary,
     width: '40%',
     padding: 15,
@@ -53,13 +53,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
   },
-  TextHeader: {
+  textHeader: {
     fontSize: 24,
     color: colors.heading,
     marginBottom: 20,
     marginLeft: 120,
   },
-  TextBottom: {
+  textBottom: {
     fontSize: 24,
     color: 'white',
   },

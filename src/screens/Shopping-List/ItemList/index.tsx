@@ -3,15 +3,15 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../../constants/Colors';
 
-export default function Poduct({ item, deleteItem }) {
+export default function Product({ item, deleteItem }) {
   return (
-    <View style={styles.ListContainer}>
-      <Text style={styles.TextDate}> {item?.quantite}</Text>
-      <Text style={styles.TextItem}>{item?.value}</Text>
+    <View style={styles.listContainer}>
+      <Text style={styles.textDate}> {item?.quantity}</Text>
+      <Text style={styles.textItem}>{item?.value}</Text>
 
       <TouchableOpacity
-        style={styles.IconContainer}
-        onPress={() => deleteItem(item?.key)}
+        style={styles.iconContainer}
+        onPress={() => deleteItem()}
       >
         <MaterialIcons name='delete' size={24} color={colors.primary} />
       </TouchableOpacity>
@@ -20,7 +20,7 @@ export default function Poduct({ item, deleteItem }) {
 }
 
 const styles = StyleSheet.create({
-  ListContainer: {
+  listContainer: {
     backgroundColor: 'white',
     height: 'auto',
     width: 350,
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  TextItem: {
+  textItem: {
     color: colors.heading,
     width: 100,
     height: 'auto',
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     marginRight: 0,
   },
 
-  TextDate: {
+  textDate: {
     color: colors.primary,
     fontSize: 30,
     marginRight: 10,
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 
-  IconContainer: {
+  iconContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  CirlceContainer: {
+  cirlceContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     paddingLeft: 5,
