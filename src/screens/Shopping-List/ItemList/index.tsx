@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../../constants/Colors';
 
-export default function Product({ item, deleteItem }) {
+export const Product: React.FC = ({ item, deleteItem }) => {
   return (
     <View style={styles.listContainer}>
       <Text style={styles.textDate}> {item?.quantity}</Text>
@@ -17,7 +17,7 @@ export default function Product({ item, deleteItem }) {
       </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   listContainer: {
