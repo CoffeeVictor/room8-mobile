@@ -20,7 +20,7 @@ export const ShoppingList: React.FC = () => {
             <Product
               item={item}
               key={item.value}
-              deleteItem={handleDeleteTask()}
+              deleteItem={handleDeleteTask}
             ></Product>
           ))}
         </View>
