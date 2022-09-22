@@ -1,33 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { TopBar } from '../../components/TobBar';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { TodoList } from './ItemList';
+import { Product } from './ItemList';
 import { colors } from '../../constants/Colors';
+import { useNavigation } from '@react-navigation/native';
 
-export const ToDoListPage: React.FC = () => {
-  const [list] = useState([]);
+export const ShoppingList: React.FC = () => {
+  const navi = useNavigation();
+  const list = useState([]);
 
   const handleDeleteTask = () => {};
-  const handleSelectTask = () => {};
-
-  useEffect(() => {}, []);
   return (
     <View>
       <TopBar></TopBar>
       <View style={styles.view}>
         <View>
-          <Text style={styles.textHeader}>To-Do List</Text>
-          {list.map((item) => (
-            <TodoList
+          <Text style={styles.textHeader}>Shopping List</Text>
+          {list?.map((item) => (
+            <Product
               item={item}
               key={item.value}
               deleteItem={handleDeleteTask}
-              selectItem={handleSelectTask}
-            ></TodoList>
+            ></Product>
           ))}
         </View>
-        <TouchableOpacity style={styles.submitButton} onPress={() => {}}>
-          <Text style={styles.textBottom}>Create Task</Text>
+        <TouchableOpacity
+          style={styles.submitButton}
+          onPress={() => navi.navigate('CreatProduct')}
+        >
+          <Text style={styles.textBottom}>Add Product</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     backgroundColor: colors.primary,
-    width: '40%',
+    width: '50%',
     padding: 15,
     marginTop: 10,
     borderRadius: 10,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { TopBar } from '../../../components/TobBar';
 import {
@@ -8,58 +8,57 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import TodoList from '../ItemList';
+import { Product } from '../ItemList';
 import { colors } from '../../../constants/Colors';
 
-export const CreatTask: React.FC = () => {
+export const CreatProduct: React.FC = () => {
   const [value, setValue] = useState('');
-  const [people, setPeople] = useState('');
-  const [list, setList] = useState([
-    { value: 'Clean the table', people: 'Maely' },
-  ]);
+  const [quantity, setQuantity] = useState(0);
+  const [list, setList] = useState([]);
 
-  const onChangeValue = (text) => {
+  const onChangeValue = (text: string) => {
     setValue(text);
   };
-  const onChangePeople = (text) => {
-    setPeople(text);
+  const onChangeQuantity = (num: string) => {
+    const num2 = parseInt(num);
+    setQuantity(num2);
   };
 
-  const handelCreatTask = () => {
-    const task = { value: value, people: people };
-    setList([...list, task]);
-  };
+  const handleCreateTask = useCallback(() => {
+    const task = { value: value, quantity: quantity };
+    setList((list) => [...list, task]);
+  }, [list]);
 
-  const handelDeleteTask = () => {};
-  useEffect(() => {}, [list]);
+  const handleDeleteProduct = () => {};
+
   return (
     <View>
       <TopBar></TopBar>
       <View style={styles.view}>
         <View>
-          <Text style={styles.TextHeader}> Adding To To-Do List</Text>
+          <Text style={styles.textHeader}> Adding To Shopping List</Text>
         </View>
         <View>
           {list.map((item) => {
-            <TodoList item={item} deleteItem={handelDeleteTask()}></TodoList>;
+            <Product item={item} deleteItem={handleDeleteProduct}></Product>;
           })}
         </View>
-        <View style={styles.InputContainer}>
+        <View style={styles.inputContainer}>
           <TextInput
-            style={styles.Input}
-            placeholder='Add Task...'
+            style={styles.input}
+            placeholder='Add Product...'
             onChangeText={onChangeValue}
           />
           <TextInput
-            style={styles.Input}
-            placeholder='Add Responsible...'
-            onChangeText={onChangePeople}
+            style={styles.input}
+            placeholder='Add Quantity...'
+            onChangeText={onChangeQuantity}
           />
         </View>
         <TouchableOpacity
-          style={styles.SubmitButton}
+          style={styles.submitButton}
           onPress={() => {
-            handelCreatTask();
+            handleCreateTask();
           }}
         >
           <AntDesign name='plus' size={24} color='white' />
@@ -78,12 +77,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  InputContainer: {
+  inputContainer: {
     borderRadius: 10,
     marginTop: 20,
   },
 
-  Input: {
+  input: {
     fontSize: 20,
     backgroundColor: 'white',
     width: 300,
@@ -93,7 +92,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  SubmitButton: {
+  submitButton: {
     backgroundColor: colors.primary,
     width: '30%',
     padding: 15,
@@ -102,7 +101,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  TextHeader: {
+  textHeader: {
     fontSize: 24,
     color: colors.heading,
   },

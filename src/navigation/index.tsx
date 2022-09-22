@@ -14,6 +14,8 @@ import { Costs } from '../screens/Costs';
 import { CreateGroup } from '../screens/CreateGroup';
 import { Home } from '../screens/Home';
 import { Notifications } from '../screens/Notifications';
+import { ShoppingList } from '../screens/Shopping-List';
+import { CreatProduct } from '../screens/Shopping-List/CreatProduct';
 import { ToDoListPage } from '../screens/To-do';
 
 export default function Navigation() {
@@ -32,6 +34,7 @@ const TAB_ICONS: {
   Costs: <FontAwesome name='dollar' />,
   Add: <AntDesign name='pluscircleo' />,
   ToDoList: <AntDesign name='checkcircle' />,
+  ShoppingList: <AntDesign name='shoppingcart' />,
 };
 
 /**
@@ -62,6 +65,12 @@ function RootNavigator() {
       <Stack.Screen name='Create' component={CreateGroup} />
       <Stack.Screen name='Home' component={Home} />
       <Stack.Screen name='ToDoList' component={ToDoListPage} />
+      <Stack.Screen name='ShopList' component={ShoppingList} />
+      <Stack.Screen
+        name='CreatProduct'
+        component={CreatProduct}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
@@ -101,6 +110,14 @@ function BottomTabNavigator() {
         options={{
           headerShown: false,
           tabBarIcon: () => getTabIcon('ToDoList'),
+        }}
+      />
+      <BottomTab.Screen
+        name='Shopping List'
+        component={ShoppingList}
+        options={{
+          headerShown: false,
+          tabBarIcon: () => getTabIcon('ShoppingList'),
         }}
       />
     </BottomTab.Navigator>

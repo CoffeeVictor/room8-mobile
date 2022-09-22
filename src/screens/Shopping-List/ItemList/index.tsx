@@ -1,35 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../../constants/Colors';
-import { Checkbox } from 'react-native-paper';
 
 interface Item {
   value: string;
-  people: string;
+  quantity: number;
 }
-interface TodoProps {
+interface ProductProps {
   item: Item;
   deleteItem: Function;
-  selectItem: Function;
 }
 
-export const TodoList = ({ item, deleteItem, selectItem }: TodoProps) => {
-  const [isSelected, setSelection] = useState(false);
+export const Product = ({ item, deleteItem }: ProductProps) => {
   return (
     <View style={styles.listContainer}>
-      <Checkbox
-        status={isSelected ? 'checked' : 'unchecked'}
-        onPress={() => {
-          setSelection(!isSelected);
-          if (isSelected) selectItem(item);
-        }}
-        color={colors.primary}
-      />
-      <View>
-        <Text style={styles.textItem}>{item?.value}</Text>
-        <Text style={styles.textDate}> {item?.people}</Text>
-      </View>
+      <Text style={styles.textDate}> {item?.quantity}</Text>
+      <Text style={styles.textItem}>{item?.value}</Text>
+
       <TouchableOpacity
         style={styles.iconContainer}
         onPress={() => deleteItem()}
@@ -49,30 +37,25 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-
-  componentContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    height: 'auto',
-    width: 'auto',
+    alignItems: 'center',
   },
 
   textItem: {
     color: colors.heading,
-    width: 260,
+    width: 100,
     height: 'auto',
-    fontSize: 20,
+    fontSize: 24,
     marginTop: 10,
-    marginRight: 20,
+    marginRight: 0,
   },
 
   textDate: {
     color: colors.primary,
-    fontSize: 15,
-    marginRight: 20,
+    fontSize: 30,
+    marginRight: 10,
     borderRadius: 10,
-    width: 100,
+    width: 70,
+    marginLeft: 10,
   },
 
   iconContainer: {
