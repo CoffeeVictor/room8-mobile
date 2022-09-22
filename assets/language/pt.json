@@ -5,6 +5,12 @@
     "passwordInput": "Digite sua senha",
     "loginButton": "Login",
     "registerButton": "Registrar",
-    "languageButton": "Trocar para ingles"
+    "languageButton": "Trocar para inglês",
+    "homeTextNoGroup": "Você não possui um grupo",
+    "homeTextJoinGroup": "Entre em um grupo ou crie um",
+    "homeCreateGroupButton": " Criar um grupo",
+    "homeJoinGroup": "Ou entre em um grupo já criado :",
+    "homeJoinGroupInput": "Digite o código do grupo",
+    "homeJoinGroupButton": " Entrar no grupo"
   }
 }

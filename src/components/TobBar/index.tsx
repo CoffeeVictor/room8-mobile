@@ -14,7 +14,7 @@ export const TopBar: React.FC = () => {
   return (
     <SafeAreaView style={styles.safebar}>
       <View style={styles.container}>
-        <Text style={styles.text}>Bem vindo {auth?.user?.email}</Text>
+        <Text style={styles.text}>{auth?.user?.email}</Text>
 
         <TouchableOpacity style={styles.logout} onPress={handleLogout}>
           <AntDesign name='logout' size={20} color={colors.primary} />

@@ -5,6 +5,12 @@
     "passwordInput": "Type your password",
     "loginButton": "Login",
     "registerButton": "Register",
-    "languageButton": "Change to portugues"
+    "languageButton": "Change to portugues",
+    "homeTextNoGroup": "You don't have a group",
+    "homeTextJoinGroup": "Join a group or create a new one",
+    "homeCreateGroupButton": " Create Group",
+    "homeJoinGroup": "Or join an already created group :",
+    "homeJoinGroupInput": "Enter the Group Code",
+    "homeJoinGroupButton": " Join Group"
   }
 }

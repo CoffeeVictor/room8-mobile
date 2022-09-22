@@ -12,10 +12,12 @@ import { colors } from '../../constants/Colors';
 import { HomeList } from './HomeList';
 import { useNavigation } from '@react-navigation/native';
 import { CreateGroup } from '../CreateGroup';
-
+import { languageEn } from '../../../assets/language/en.json';
+import { languagePt } from '../../../assets/language/pt.json';
 
 export const Home: React.FC = () => {
-  const navi = useNavigation()
+  const [language, setLanguage] = useState(languageEn);
+  const navi = useNavigation();
   const groups = [];
   const people = [
     { name: 'Maely', totalexpense: '23.43', status: 'Pay' },
@@ -23,27 +25,36 @@ export const Home: React.FC = () => {
     { name: 'Victor', totalexpense: '0', status: 'Ok' },
   ];
   const [cod, setCod] = useState('');
+
+  const handleLanguage = async () => {
+    if (language.lan === 'en') {
+      setLanguage(languagePt);
+    } else {
+      setLanguage(languageEn);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <TopBar></TopBar>
       <SafeAreaView style={styles.view}>
-
         {groups.length == 0 ? (
           <SafeAreaView>
-            <Text style={styles.text}>You don't have a group</Text>
-            <Text style={styles.text}>Join a group or create a new one</Text>
+            <Text style={styles.text}>{language.homeTextNoGroup}</Text>
+            <Text style={styles.text}>{language.homeTextJoinGroup}</Text>
             <TouchableOpacity
               style={styles.button}
               onPress={() => navi.navigate('Create')}
             >
-              <Text style={styles.textButton}> Create Group</Text>
+              <Text style={styles.textButton}>
+                {language.homeCreateGroupButton}
+              </Text>
             </TouchableOpacity>
 
-            <Text style={styles.text}>Or join an already created group :</Text>
+            <Text style={styles.text}>{language.homeJoinGroup}</Text>
             <TextInput
               style={styles.formInput}
-              placeholder={'Enter the Group Code'}
-
+              placeholder={language.homeJoinGroupInput}
               keyboardType={'name-phone-pad'}
               value={cod}
               onChangeText={setCod}
@@ -51,15 +62,22 @@ export const Home: React.FC = () => {
             ></TextInput>
             <TouchableOpacity
               style={styles.button}
-
               onPress={() => console.log('join')}
             >
-              <Text style={styles.textButton}> Join Group</Text>
+              <Text style={styles.textButton}>
+                {language.homeJoinGroupButton}
+              </Text>
             </TouchableOpacity>
           </SafeAreaView>
         ) : (
           <HomeList people={people}></HomeList>
         )}
+        <TouchableOpacity
+          style={styles.languageButton}
+          onPress={handleLanguage}
+        >
+          <Text style={styles.textLanguage}>{language.languageButton}</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </View>
   );
@@ -106,5 +124,20 @@ const styles = StyleSheet.create({
   textButton: {
     color: 'white',
     fontSize: 20,
+  },
+  textLanguage: {
+    color: colors.primary,
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  languageButton: {
+    backgroundColor: 'white',
+    borderColor: colors.primary,
+    borderWidth: 2,
+    marginTop: 50,
+    width: '40%',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
   },
 });
