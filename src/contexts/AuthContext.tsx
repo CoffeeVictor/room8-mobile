@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, Us
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../config/firebase";
 
-interface IAuthValue {
+export interface IAuthValue {
     user: User | null,
     login: (email: string, password: string) => Promise<UserCredential | undefined>,
     register: (email: string, password: string) => Promise<UserCredential | undefined>,
