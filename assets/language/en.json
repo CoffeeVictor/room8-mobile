@@ -1,0 +1,10 @@
+{
+  "languageEn": {
+    "lan": "en",
+    "emailInput": "Type your email",
+    "passwordInput": "Type your password",
+    "loginButton": "Login",
+    "registerButton": "Register",
+    "languageButton": "Change to portugues"
+  }
+}

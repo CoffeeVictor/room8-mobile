@@ -1,0 +1,10 @@
+{
+  "languagePt": {
+    "lan": "pt",
+    "emailInput": "Digite seu email",
+    "passwordInput": "Digite sua senha",
+    "loginButton": "Login",
+    "registerButton": "Registrar",
+    "languageButton": "Trocar para ingles"
+  }
+}

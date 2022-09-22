@@ -15,7 +15,7 @@ import { CreateGroup } from '../screens/CreateGroup';
 import { Home } from '../screens/Home';
 import { Notifications } from '../screens/Notifications';
 import { ShoppingList } from '../screens/Shopping-List';
-import { CreatProduct } from '../screens/Shopping-List/CreatProduct';
+import { CreatProduct } from '../screens/Shopping-List/CreateProduct';
 import { ToDoListPage } from '../screens/To-do';
 
 export default function Navigation() {
