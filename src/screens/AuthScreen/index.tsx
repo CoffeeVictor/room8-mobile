@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { useUser } from "../../contexts/UserContext";
 import { colors } from "../../constants/Colors";
 import { useAuth } from "../../contexts/AuthContext";
 
