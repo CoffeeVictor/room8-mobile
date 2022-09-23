@@ -1,16 +1,44 @@
 {
   "languageEn": {
     "lan": "en",
+
     "emailInput": "Type your email",
     "passwordInput": "Type your password",
     "loginButton": "Login",
     "registerButton": "Register",
     "languageButton": "Change to portugues",
+
     "homeTextNoGroup": "You don't have a group",
     "homeTextJoinGroup": "Join a group or create a new one",
     "homeCreateGroupButton": " Create Group",
     "homeJoinGroup": "Or join an already created group :",
     "homeJoinGroupInput": "Enter the Group Code",
-    "homeJoinGroupButton": " Join Group"
+    "homeJoinGroupButton": " Join Group",
+
+    "toDoList": "To-Do List",
+    "toDoListButton": "Create Task",
+
+    "toDoListAdding": "Adding To To-Do List",
+    "toDoListAddTask": "Add Task...",
+    "toDoListAddResponseble": "Add Responsible...",
+
+    "shoppingList": "Shopping List",
+    "shoppingListButton": "Add Product",
+
+    "shoppingListAdding": "Adding To Shopping List",
+    "shoppingListAddingProduct": "Add Product...",
+    "shoppingListAddingQuantity": "Add Quantity...",
+
+    "createGroup": "Name the group you wish to create:",
+    "createGroupButton": "Create Group",
+    "createGroupInput": "Group Name",
+
+    "costAlert": "No cost add yet...",
+    "costTextPart1": "must",
+    "costTextPart2": "receive",
+    "costTextPart3": "pay",
+    "costName": "Name",
+    "costValue": "Value",
+    "costButton": "Calculate results"
   }
 }

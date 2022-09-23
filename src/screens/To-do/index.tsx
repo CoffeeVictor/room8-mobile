@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { TopBar } from '../../components/TobBar';
+import { TopBar, UserContext } from '../../components/TobBar';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { TodoList } from './ItemList';
 import { colors } from '../../constants/Colors';
 
 export const ToDoListPage: React.FC = () => {
+  const language = React.useContext(UserContext);
+
   const [list] = useState([]);
 
   const handleDeleteTask = () => {};
@@ -16,8 +18,8 @@ export const ToDoListPage: React.FC = () => {
       <TopBar></TopBar>
       <View style={styles.view}>
         <View>
-          <Text style={styles.textHeader}>To-Do List</Text>
-          {list.map((item) => (
+          <Text style={styles.textHeader}>{language.toDoList}</Text>
+          {list?.map((item) => (
             <TodoList
               item={item}
               key={item.value}
@@ -27,7 +29,7 @@ export const ToDoListPage: React.FC = () => {
           ))}
         </View>
         <TouchableOpacity style={styles.submitButton} onPress={() => {}}>
-          <Text style={styles.textBottom}>Create Task</Text>
+          <Text style={styles.textBottom}>{language.toDoListButton}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: colors.heading,
     marginBottom: 20,
-    marginLeft: 120,
+    marginLeft: 100,
   },
   textBottom: {
     fontSize: 24,

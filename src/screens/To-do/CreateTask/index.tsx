@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
-import { TopBar } from '../../../components/TobBar';
+import { TopBar, UserContext } from '../../../components/TobBar';
 import {
   View,
   StyleSheet,
@@ -17,6 +17,7 @@ export const CreatTask: React.FC = () => {
   const [list, setList] = useState([
     { value: 'Clean the table', people: 'Maely' },
   ]);
+  const language = React.useContext(UserContext);
 
   const onChangeValue = (text: string) => {
     setValue(text);
@@ -38,7 +39,7 @@ export const CreatTask: React.FC = () => {
       <TopBar></TopBar>
       <View style={styles.view}>
         <View>
-          <Text style={styles.TextHeader}> Adding To To-Do List</Text>
+          <Text style={styles.textHeader}>{language.toDoListAdding}</Text>
         </View>
         <View>
           {list.map((item) => {
@@ -49,20 +50,20 @@ export const CreatTask: React.FC = () => {
             ></TodoList>;
           })}
         </View>
-        <View style={styles.InputContainer}>
+        <View style={styles.inputContainer}>
           <TextInput
-            style={styles.Input}
-            placeholder='Add Task...'
+            style={styles.input}
+            placeholder={language.toDoListAddTask}
             onChangeText={onChangeValue}
           />
           <TextInput
-            style={styles.Input}
-            placeholder='Add Responsible...'
+            style={styles.input}
+            placeholder={language.toDoListAddResponseble}
             onChangeText={onChangePeople}
           />
         </View>
         <TouchableOpacity
-          style={styles.SubmitButton}
+          style={styles.submitButton}
           onPress={() => {
             handleCreatTask();
           }}
@@ -83,12 +84,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  InputContainer: {
+  inputContainer: {
     borderRadius: 10,
     marginTop: 20,
   },
 
-  Input: {
+  input: {
     fontSize: 20,
     backgroundColor: 'white',
     width: 300,
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  SubmitButton: {
+  submitButton: {
     backgroundColor: colors.primary,
     width: '30%',
     padding: 15,
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  TextHeader: {
+  textHeader: {
     fontSize: 24,
     color: colors.heading,
   },

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TopBar } from '../../components/TobBar';
+import { TopBar, UserContext } from '../../components/TobBar';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Product } from './ItemList';
 import { colors } from '../../constants/Colors';
@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 export const ShoppingList: React.FC = () => {
   const navi = useNavigation();
   const list = useState([]);
+  const language = React.useContext(UserContext);
 
   const handleDeleteTask = () => {};
   return (
@@ -15,7 +16,7 @@ export const ShoppingList: React.FC = () => {
       <TopBar></TopBar>
       <View style={styles.view}>
         <View>
-          <Text style={styles.textHeader}>Shopping List</Text>
+          <Text style={styles.textHeader}>{language.shoppingList}</Text>
           {list?.map((item) => (
             <Product
               item={item}
@@ -28,7 +29,7 @@ export const ShoppingList: React.FC = () => {
           style={styles.submitButton}
           onPress={() => navi.navigate('CreatProduct')}
         >
-          <Text style={styles.textBottom}>Add Product</Text>
+          <Text style={styles.textBottom}>{language.shoppingListButton}</Text>
         </TouchableOpacity>
       </View>
     </View>

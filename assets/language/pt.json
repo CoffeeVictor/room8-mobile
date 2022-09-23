@@ -6,11 +6,38 @@
     "loginButton": "Login",
     "registerButton": "Registrar",
     "languageButton": "Trocar para inglês",
+
     "homeTextNoGroup": "Você não possui um grupo",
     "homeTextJoinGroup": "Entre em um grupo ou crie um",
     "homeCreateGroupButton": " Criar um grupo",
     "homeJoinGroup": "Ou entre em um grupo já criado :",
     "homeJoinGroupInput": "Digite o código do grupo",
-    "homeJoinGroupButton": " Entrar no grupo"
+    "homeJoinGroupButton": " Entrar no grupo",
+
+    "toDoList": "Lista de Afazeres",
+    "toDoListButton": "Criar Tarefa",
+
+    "toDoListAdding": "Adicionar a lista de afazeres",
+    "toDoListAddTask": "Adicionar Tarefa...",
+    "toDoListAddResponseble": "Adicionar Responsável...",
+
+    "shoppingList": "Lista de Compras",
+    "shoppingListButton": "Adicionar Produtos",
+
+    "shoppingListAdding": "Adicionando na Lista de Compras",
+    "shoppingListAddingProduct": "Adicionar Produto...",
+    "shoppingListAddingQuantity": "Adicionar Quantidade...",
+
+    "createGroup": "Dê um nome ao grupo que você quer criar:",
+    "createGroupButton": "Crie um Grupo",
+    "createGroupInput": "Nome do Grupo",
+
+    "costAlert": "Nenhum custo adicionado ainda...",
+    "costTextPart1": "deve",
+    "costTextPart2": "receber",
+    "costTextPart3": "pagar",
+    "costName": "Nome",
+    "costValue": "Valor",
+    "costButton": "Calcular resultados"
   }
 }

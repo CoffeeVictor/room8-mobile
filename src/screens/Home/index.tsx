@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,16 +7,13 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { TopBar } from '../../components/TobBar';
+import { TopBar, UserContext } from '../../components/TobBar';
 import { colors } from '../../constants/Colors';
 import { HomeList } from './HomeList';
 import { useNavigation } from '@react-navigation/native';
-import { CreateGroup } from '../CreateGroup';
-import { languageEn } from '../../../assets/language/en.json';
-import { languagePt } from '../../../assets/language/pt.json';
 
 export const Home: React.FC = () => {
-  const [language, setLanguage] = useState(languageEn);
+  const language = React.useContext(UserContext);
   const navi = useNavigation();
   const groups = [];
   const people = [
@@ -25,14 +22,6 @@ export const Home: React.FC = () => {
     { name: 'Victor', totalexpense: '0', status: 'Ok' },
   ];
   const [cod, setCod] = useState('');
-
-  const handleLanguage = async () => {
-    if (language.lan === 'en') {
-      setLanguage(languagePt);
-    } else {
-      setLanguage(languageEn);
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -62,7 +51,7 @@ export const Home: React.FC = () => {
             ></TextInput>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => console.log('join')}
+              onPress={() => console.log(language.lan)}
             >
               <Text style={styles.textButton}>
                 {language.homeJoinGroupButton}
@@ -72,12 +61,6 @@ export const Home: React.FC = () => {
         ) : (
           <HomeList people={people}></HomeList>
         )}
-        <TouchableOpacity
-          style={styles.languageButton}
-          onPress={handleLanguage}
-        >
-          <Text style={styles.textLanguage}>{language.languageButton}</Text>
-        </TouchableOpacity>
       </SafeAreaView>
     </View>
   );
@@ -124,20 +107,5 @@ const styles = StyleSheet.create({
   textButton: {
     color: 'white',
     fontSize: 20,
-  },
-  textLanguage: {
-    color: colors.primary,
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  languageButton: {
-    backgroundColor: 'white',
-    borderColor: colors.primary,
-    borderWidth: 2,
-    marginTop: 50,
-    width: '40%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
   },
 });

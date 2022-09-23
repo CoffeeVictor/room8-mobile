@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
-import { TopBar } from '../../../components/TobBar';
+import { TopBar, UserContext } from '../../../components/TobBar';
 import {
   View,
   StyleSheet,
@@ -15,6 +15,7 @@ export const CreatProduct: React.FC = () => {
   const [value, setValue] = useState('');
   const [quantity, setQuantity] = useState(0);
   const [list, setList] = useState([]);
+  const language = React.useContext(UserContext);
 
   const onChangeValue = (text: string) => {
     setValue(text);
@@ -36,7 +37,7 @@ export const CreatProduct: React.FC = () => {
       <TopBar></TopBar>
       <View style={styles.view}>
         <View>
-          <Text style={styles.textHeader}> Adding To Shopping List</Text>
+          <Text style={styles.textHeader}>{language.shoppingListAdding}</Text>
         </View>
         <View>
           {list.map((item) => {
@@ -46,12 +47,12 @@ export const CreatProduct: React.FC = () => {
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            placeholder='Add Product...'
+            placeholder={language.shoppingListAddingProduct}
             onChangeText={onChangeValue}
           />
           <TextInput
             style={styles.input}
-            placeholder='Add Quantity...'
+            placeholder={language.shoppingListAddingQuantity}
             onChangeText={onChangeQuantity}
           />
         </View>
