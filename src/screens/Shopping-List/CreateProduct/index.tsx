@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
-import { TopBar, UserContext } from '../../../components/TobBar';
+import { TopBar } from '../../../components/TobBar';
 import {
   View,
   StyleSheet,
@@ -10,12 +10,13 @@ import {
 } from 'react-native';
 import { Product } from '../ItemList';
 import { colors } from '../../../constants/Colors';
+import { useLan } from '../../../contexts/LanguageContext';
 
 export const CreatProduct: React.FC = () => {
   const [value, setValue] = useState('');
   const [quantity, setQuantity] = useState(0);
   const [list, setList] = useState([]);
-  const language = React.useContext(UserContext);
+  const { language } = useLan();
 
   const onChangeValue = (text: string) => {
     setValue(text);

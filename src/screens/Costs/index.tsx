@@ -10,10 +10,11 @@ import {
 } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import { CostItem, CostItemDTO } from '../../components/CostItem';
-import { TopBar, UserContext } from '../../components/TobBar';
+import { TopBar } from '../../components/TobBar';
 import { colors } from '../../constants/Colors';
 import { IAuthValue, useAuth } from '../../contexts/AuthContext';
 import { useGroup } from '../../contexts/GroupContext';
+import { useLan } from '../../contexts/LanguageContext';
 import { useUser } from '../../contexts/UserContext';
 
 interface ICostRecord {
@@ -21,7 +22,7 @@ interface ICostRecord {
 }
 
 export const Costs: React.FC = () => {
-  const language = React.useContext(UserContext);
+  const { language } = useLan();
 
   const auth = useAuth() as IAuthValue;
   const groupContext = useGroup();

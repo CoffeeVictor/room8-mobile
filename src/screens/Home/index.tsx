@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,13 +7,14 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { TopBar, UserContext } from '../../components/TobBar';
+import { TopBar } from '../../components/TobBar';
 import { colors } from '../../constants/Colors';
 import { HomeList } from './HomeList';
 import { useNavigation } from '@react-navigation/native';
+import { useLan } from '../../contexts/LanguageContext';
 
 export const Home: React.FC = () => {
-  const language = React.useContext(UserContext);
+  const { language } = useLan();
   const navi = useNavigation();
   const groups = [];
   const people = [
@@ -22,6 +23,10 @@ export const Home: React.FC = () => {
     { name: 'Victor', totalexpense: '0', status: 'Ok' },
   ];
   const [cod, setCod] = useState('');
+
+  useEffect(() => {
+    console.log(language.lan);
+  }, [language]);
 
   return (
     <View style={styles.container}>

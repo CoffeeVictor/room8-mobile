@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { TopBar, UserContext } from '../../components/TobBar';
+import { TopBar } from '../../components/TobBar';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Product } from './ItemList';
 import { colors } from '../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
+import { useLan } from '../../contexts/LanguageContext';
 
 export const ShoppingList: React.FC = () => {
   const navi = useNavigation();
-  const list = useState([]);
-  const language = React.useContext(UserContext);
+  const [list, setList] = useState([]);
+  const { language } = useLan();
 
   const handleDeleteTask = () => {};
   return (
     <View>
       <TopBar></TopBar>
       <View style={styles.view}>
+        <Text style={styles.textHeader}>{language.shoppingList}</Text>
         <View>
-          <Text style={styles.textHeader}>{language.shoppingList}</Text>
           {list?.map((item) => (
             <Product
               item={item}
@@ -56,7 +57,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: colors.heading,
     marginBottom: 20,
-    marginLeft: 120,
+    marginLeft: 10,
+    alignItems: 'center',
   },
   textBottom: {
     fontSize: 24,

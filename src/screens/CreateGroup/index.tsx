@@ -13,10 +13,11 @@ import React, { useEffect, useState } from 'react';
 import { db, firestore } from '../../config/firebase';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../contexts/AuthContext';
-import { TopBar, UserContext } from '../../components/TobBar';
+import { TopBar } from '../../components/TobBar';
+import { useLan } from '../../contexts/LanguageContext';
 
 export const CreateGroup: React.FC = () => {
-  const language = React.useContext(UserContext);
+  const { language } = useLan();
 
   const [groupName, setGroupName] = useState('');
 

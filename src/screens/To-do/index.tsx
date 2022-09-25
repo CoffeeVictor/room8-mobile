@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { TopBar, UserContext } from '../../components/TobBar';
+import { TopBar } from '../../components/TobBar';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { TodoList } from './ItemList';
 import { colors } from '../../constants/Colors';
+import { useLan } from '../../contexts/LanguageContext';
 
 export const ToDoListPage: React.FC = () => {
-  const language = React.useContext(UserContext);
+  const { language } = useLan();
 
   const [list] = useState([]);
 
@@ -17,8 +18,8 @@ export const ToDoListPage: React.FC = () => {
     <View>
       <TopBar></TopBar>
       <View style={styles.view}>
+        <Text style={styles.textHeader}>{language.toDoList}</Text>
         <View>
-          <Text style={styles.textHeader}>{language.toDoList}</Text>
           {list?.map((item) => (
             <TodoList
               item={item}
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     backgroundColor: colors.primary,
-    width: '40%',
+    width: '50%',
     padding: 15,
     marginTop: 10,
     borderRadius: 10,
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: colors.heading,
     marginBottom: 20,
-    marginLeft: 100,
+    marginLeft: 10,
   },
   textBottom: {
     fontSize: 24,

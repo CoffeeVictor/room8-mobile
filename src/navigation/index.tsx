@@ -62,7 +62,11 @@ function RootNavigator() {
           options={{ headerShown: false }}
         />
       )}
-      <Stack.Screen name='Create' component={CreateGroup} />
+      <Stack.Screen
+        name='Create'
+        component={CreateGroup}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name='Home' component={Home} />
       <Stack.Screen name='ToDoList' component={ToDoListPage} />
       <Stack.Screen name='ShopList' component={ShoppingList} />

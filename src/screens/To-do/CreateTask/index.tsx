@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
-import { TopBar, UserContext } from '../../../components/TobBar';
+import { TopBar } from '../../../components/TobBar';
 import {
   View,
   StyleSheet,
@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { TodoList } from '../ItemList';
 import { colors } from '../../../constants/Colors';
+import { useLan } from '../../../contexts/LanguageContext';
 
 export const CreatTask: React.FC = () => {
   const [value, setValue] = useState('');
@@ -17,7 +18,7 @@ export const CreatTask: React.FC = () => {
   const [list, setList] = useState([
     { value: 'Clean the table', people: 'Maely' },
   ]);
-  const language = React.useContext(UserContext);
+  const { language } = useLan();
 
   const onChangeValue = (text: string) => {
     setValue(text);

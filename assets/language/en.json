@@ -39,6 +39,10 @@
     "costTextPart3": "pay",
     "costName": "Name",
     "costValue": "Value",
-    "costButton": "Calculate results"
+    "costButton": "Calculate results",
+
+    "HomeListName": "Name",
+    "HomeListStatus": "Status",
+    "HomeListExpense": "R$"
   }
 }

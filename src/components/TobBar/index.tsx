@@ -1,29 +1,21 @@
 import { AntDesign } from '@expo/vector-icons';
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { colors } from '../../constants/Colors';
 import { useAuth } from '../../contexts/AuthContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { languageEn } from '../../../assets/language/en.json';
-import { languagePt } from '../../../assets/language/pt.json';
-
-export const UserContext = React.createContext(languageEn);
+import { useLan } from '../../contexts/LanguageContext';
 
 export const TopBar: React.FC = () => {
   const auth = useAuth();
-  const [language, setLanguage] = useState(languageEn);
-  <UserContext.Provider value={language}></UserContext.Provider>;
+  const language = useLan();
 
   const handleLogout = async () => {
     auth?.logout();
   };
+
   const handleLanguageChange = async () => {
-    if (language.lan === 'en') {
-      setLanguage(languagePt);
-    } else {
-      setLanguage(languageEn);
-    }
-    console.log(language.lan);
+    language.setLanguage();
   };
 
   return (

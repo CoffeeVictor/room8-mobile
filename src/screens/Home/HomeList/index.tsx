@@ -3,8 +3,17 @@ import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView, StyleSheet } from 'react-native';
 import { colors } from '../../../constants/Colors';
 import { DataTable } from 'react-native-paper';
+import { useLan } from '../../../contexts/LanguageContext';
+
+interface Item {
+  name: string;
+  status: number;
+  totalexpense: number;
+}
 
 export const HomeList: React.FC = ({ people }) => {
+  const { language } = useLan();
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -12,17 +21,17 @@ export const HomeList: React.FC = ({ people }) => {
           <DataTable>
             <DataTable.Header style={styles.textTable}>
               <DataTable.Title>
-                <Text style={styles.textTable}>Name</Text>
+                <Text style={styles.textTable}>{language.HomeListName}</Text>
               </DataTable.Title>
               <DataTable.Title>
-                <Text style={styles.textTable}>Status</Text>
+                <Text style={styles.textTable}>{language.HomeListStatus}</Text>
               </DataTable.Title>
               <DataTable.Title numeric>
-                <Text style={styles.textTable}>R$</Text>
+                <Text style={styles.textTable}>{language.HomeListExpense}</Text>
               </DataTable.Title>
               <DataTable.Title>-</DataTable.Title>
             </DataTable.Header>
-            {people?.map((item) => (
+            {people?.map((item: Item) => (
               <DataTable.Row style={styles.text} key={item.name + 'row'}>
                 <DataTable.Cell>
                   <Text style={styles.text}>{item.name}</Text>
