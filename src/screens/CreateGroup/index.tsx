@@ -4,17 +4,16 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  ScrollView,
   KeyboardAvoidingView,
-  FlatList,
 } from 'react-native';
 import { colors } from '../../constants/Colors';
-import React, { useEffect, useState } from 'react';
-import { db, firestore } from '../../config/firebase';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../contexts/AuthContext';
 import { TopBar } from '../../components/TobBar';
 import { useLan } from '../../contexts/LanguageContext';
+import { useGroup } from '../../contexts/GroupContext';
+import { useUser } from '../../contexts/UserContext';
 
 export const CreateGroup: React.FC = () => {
   const { language } = useLan();
