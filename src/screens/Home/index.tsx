@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import {
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
   View,
+  Text,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TopBar } from '../../components/TobBar';
@@ -12,27 +12,68 @@ import { colors } from '../../constants/Colors';
 import { HomeList } from './HomeList';
 import { useNavigation } from '@react-navigation/native';
 import { useLan } from '../../contexts/LanguageContext';
+import { CreateGroup } from '../CreateGroup';
+import { IAuthValue, useAuth } from '../../contexts/AuthContext';
+import { useGroup } from '../../contexts/GroupContext';
+import { useUser } from '../../contexts/UserContext';
+import { ActivityIndicator } from 'react-native-paper';
 
 export const Home: React.FC = () => {
-  const { language } = useLan();
+  const auth = useAuth() as IAuthValue;
+  const groupContext = useGroup();
+  const userContext = useUser();
   const navi = useNavigation();
-  const groups = [];
   const people = [
     { name: 'Maely', totalexpense: '23.43', status: 'Pay' },
     { name: 'Rodrigues', totalexpense: '23.43', status: 'Receive' },
     { name: 'Victor', totalexpense: '0', status: 'Ok' },
   ];
-  const [cod, setCod] = useState('');
+  const [groupId, setGroupId] = useState('');
+  const [group, setGroup] = useState('');
+  const [userHasGroup, setUserHasGroup] = useState(-1);
+  const { language } = useLan();
 
   useEffect(() => {
-    console.log(language.lan);
-  }, [language]);
+    const checkUserGroup = async () => {
+      const userId = auth.user?.uid;
+
+      if (!userId) return;
+
+      const user = await userContext?.getUser(userId);
+
+      const groupId = user?.group;
+
+      if (!groupId) {
+        setUserHasGroup(0);
+        return;
+      }
+
+      setGroup(groupId);
+      setUserHasGroup(1);
+
+      console.log('set group', groupId);
+    };
+
+    checkUserGroup().catch(console.error);
+  }, []);
+
+  const onJoinButtonPressed = async () => {
+    const user = auth?.user?.uid;
+
+    if (!user || !groupId) return;
+
+    await groupContext
+      ?.addUserToGroup(groupId, [user])
+      .then((response) => console.log('response', response));
+  };
 
   return (
     <View style={styles.container}>
       <TopBar></TopBar>
       <SafeAreaView style={styles.view}>
-        {groups.length == 0 ? (
+        {userHasGroup == -1 ? (
+          <ActivityIndicator />
+        ) : userHasGroup === 0 ? (
           <SafeAreaView>
             <Text style={styles.text}>{language.homeTextNoGroup}</Text>
             <Text style={styles.text}>{language.homeTextJoinGroup}</Text>
@@ -50,13 +91,13 @@ export const Home: React.FC = () => {
               style={styles.formInput}
               placeholder={language.homeJoinGroupInput}
               keyboardType={'name-phone-pad'}
-              value={cod}
-              onChangeText={setCod}
+              value={groupId}
+              onChangeText={setGroupId}
               autoCapitalize={'none'}
             ></TextInput>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => console.log(language.lan)}
+              onPress={onJoinButtonPressed}
             >
               <Text style={styles.textButton}>
                 {language.homeJoinGroupButton}

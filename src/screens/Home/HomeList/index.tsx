@@ -3,6 +3,10 @@ import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView, StyleSheet } from 'react-native';
 import { colors } from '../../../constants/Colors';
 import { DataTable } from 'react-native-paper';
+import { useGroup } from '../../../contexts/GroupContext';
+import { useEffect, useState } from 'react';
+import { useUser } from '../../../contexts/UserContext';
+import { IAuthValue, useAuth } from '../../../contexts/AuthContext';
 import { useLan } from '../../../contexts/LanguageContext';
 
 interface Item {
@@ -12,7 +16,32 @@ interface Item {
 }
 
 export const HomeList: React.FC = ({ people }) => {
+  const auth = useAuth() as IAuthValue;
+  const groupContext = useGroup();
+  const userContext = useUser();
   const { language } = useLan();
+
+  const [groupId, setGroupId] = useState('');
+
+  useEffect(() => {
+    const checkUserGroup = async () => {
+      const userId = auth.user?.uid;
+
+      if (!userId) return;
+
+      const user = await userContext?.getUser(userId);
+
+      const groupId = user?.group;
+
+      if (!groupId) return;
+
+      setGroupId(groupId);
+
+      console.log('set group', groupId);
+    };
+
+    checkUserGroup().catch(console.error);
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,7 +75,7 @@ export const HomeList: React.FC = ({ people }) => {
                   {
                     <TouchableOpacity
                       style={styles.buttonRemove}
-                      onPress={() => console.log('code')}
+                      onPress={() => console.log('remove')}
                     >
                       <AntDesign
                         name='delete'
@@ -63,7 +92,7 @@ export const HomeList: React.FC = ({ people }) => {
 
         <TouchableOpacity
           style={styles.buttonAdd}
-          onPress={() => console.log('code')}
+          onPress={() => console.log(groupId)}
         >
           <Text style={styles.textButton}> Share Group</Text>
         </TouchableOpacity>

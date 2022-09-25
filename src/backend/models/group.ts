@@ -1,8 +1,8 @@
 import { CostItemDTO } from "../../components/CostItem";
 
 export interface IGroup {
-  groupDocID?: string;
+  id?: string;
   name: string;
-  users: string[];
+  users?: string[];
   costList?: CostItemDTO[];
 }

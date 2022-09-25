@@ -19,17 +19,17 @@ import { useLan } from '../../contexts/LanguageContext';
 export const CreateGroup: React.FC = () => {
   const { language } = useLan();
 
+  const auth = useAuth();
+  const groupContext = useGroup();
+  const userContext = useUser();
   const [groupName, setGroupName] = useState('');
-
-  const groupRef = firestore.collection(db, 'Groups');
-
   const navi = useNavigation();
 
-  const auth = useAuth();
+  const onCreateButtonPress = async () => {
+    const user = auth?.user?.uid;
 
-  const user = auth?.user?.uid;
+    if (!user) return;
 
-  const onAddButtonPress = () => {
     let users = [user];
     let items = [''];
     if (groupName && groupName.length > 0) {
@@ -38,9 +38,14 @@ export const CreateGroup: React.FC = () => {
         users: users,
         items: items,
       };
-      firestore.addDoc(groupRef, data).then((_doc) => {
+      const group = await groupContext?.createGroup(data);
+
+      if (!group) return;
+      console.log('group id:', group);
+
+      await userContext?.addGroupToUser(group, user).then((_doc) => {
         setGroupName('');
-        console.log(data);
+        console.log(_doc);
         navi.goBack();
       });
     }
@@ -62,7 +67,7 @@ export const CreateGroup: React.FC = () => {
       <View style={styles.buttonArea}>
         <TouchableOpacity
           style={styles.createGroupButton}
-          onPress={onAddButtonPress}
+          onPress={onCreateButtonPress}
         >
           <Text style={styles.createGroupText}>
             {language.createGroupButton}
