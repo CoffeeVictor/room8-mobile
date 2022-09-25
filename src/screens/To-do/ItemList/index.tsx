@@ -4,6 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../../constants/Colors';
 import { Checkbox } from 'react-native-paper';
 
+
 export type TaskItem = {
   value: string;
   people: string;

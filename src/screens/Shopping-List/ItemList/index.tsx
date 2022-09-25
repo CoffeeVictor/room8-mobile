@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../../constants/Colors';
 
+
 export type ShoppingItem = {
   value: string;
   quantity: number;

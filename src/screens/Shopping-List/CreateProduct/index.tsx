@@ -32,6 +32,7 @@ export const CreatProduct: React.FC = () => {
     setQuantity(num2);
   };
 
+
   const handleCreateTask = async () => {
     const userId = auth.user?.uid;
     if(!userId) return;
@@ -58,6 +59,11 @@ export const CreatProduct: React.FC = () => {
       <View style={styles.view}>
         <View>
           <Text style={styles.textHeader}> Adding To Shopping List</Text>
+        </View>
+        <View>
+          {list.map((item) => {
+            <Product item={item} deleteItem={handleDeleteProduct}></Product>;
+          })}
         </View>
         <View style={styles.inputContainer}>
           <TextInput

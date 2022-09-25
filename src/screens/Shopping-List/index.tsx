@@ -63,8 +63,6 @@ export const ShoppingList: React.FC = () => {
 
     fetchUserGroupShopping();
   };
-
-
   return (
     <View>
       <TopBar></TopBar>

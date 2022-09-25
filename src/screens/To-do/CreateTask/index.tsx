@@ -33,6 +33,7 @@ export const CreatTask: React.FC = () => {
     setPeople(text);
   };
 
+
   const handleCreatTask = async () => {
     const userId = auth.user?.uid;
     if(!userId) return;
@@ -50,7 +51,6 @@ export const CreatTask: React.FC = () => {
       navi.goBack()
     })
   };
-
   return (
     <View>
       <TopBar></TopBar>
