@@ -4,12 +4,12 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../../constants/Colors';
 import { Checkbox } from 'react-native-paper';
 
-interface Item {
+export type TaskItem = {
   value: string;
   people: string;
 }
 interface TodoProps {
-  item: Item;
+  item: TaskItem;
   deleteItem: Function;
   selectItem: Function;
 }

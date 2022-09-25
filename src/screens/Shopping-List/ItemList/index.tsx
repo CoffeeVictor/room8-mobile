@@ -3,12 +3,12 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../../constants/Colors';
 
-interface Item {
+export type ShoppingItem = {
   value: string;
   quantity: number;
 }
 interface ProductProps {
-  item: Item;
+  item: ShoppingItem;
   deleteItem: Function;
 }
 

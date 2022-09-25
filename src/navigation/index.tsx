@@ -15,8 +15,9 @@ import { CreateGroup } from '../screens/CreateGroup';
 import { Home } from '../screens/Home';
 import { Notifications } from '../screens/Notifications';
 import { ShoppingList } from '../screens/Shopping-List';
-import { CreatProduct } from '../screens/Shopping-List/CreatProduct';
+import { CreatProduct } from '../screens/Shopping-List/CreateProduct';
 import { ToDoListPage } from '../screens/To-do';
+import { CreatTask } from '../screens/To-do/CreateTask';
 
 export default function Navigation() {
   return (
@@ -62,7 +63,8 @@ function RootNavigator() {
           options={{ headerShown: false }}
         />
       )}
-      <Stack.Screen name='Create' component={CreateGroup} />
+      <Stack.Screen name='Create' component={CreateGroup}  />
+      <Stack.Screen name='CreateTask' component={CreatTask} options={{ headerShown: false }} />
       <Stack.Screen name='Home' component={Home} />
       <Stack.Screen name='ToDoList' component={ToDoListPage} />
       <Stack.Screen name='ShopList' component={ShoppingList} />

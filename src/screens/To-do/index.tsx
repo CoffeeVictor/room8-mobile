@@ -1,32 +1,90 @@
 import React, { useEffect, useState } from 'react';
 import { TopBar } from '../../components/TobBar';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { TodoList } from './ItemList';
+import { TaskItem, TodoList } from './ItemList';
 import { colors } from '../../constants/Colors';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { IAuthValue, useAuth } from '../../contexts/AuthContext';
+import { useGroup } from '../../contexts/GroupContext';
+import { useUser } from '../../contexts/UserContext';
+import { ActivityIndicator } from 'react-native-paper';
 
 export const ToDoListPage: React.FC = () => {
-  const [list] = useState([]);
+  const auth = useAuth() as IAuthValue;
+  const groupContext = useGroup();
+  const userContext = useUser();
+  const navi = useNavigation();
+  const isFocused = useIsFocused();
+  const [groupTasks,setGroupTasks] = useState<TaskItem[]>([])
 
-  const handleDeleteTask = () => {};
+  const handleDeleteTask = async (item: TaskItem) => {
+    const userId = auth.user?.uid;
+    if(!userId) return;
+    
+    const user = await userContext?.getUser(userId);
+
+    const groupId = user?.group;
+
+    if(!groupId) return;
+
+    await groupContext?.deleteTaskItemById(groupId,item);
+
+    fetchUserGroupTasks();
+  };
   const handleSelectTask = () => {};
 
-  useEffect(() => {}, []);
+  async function fetchUserGroupTasks() {
+    const userId = auth.user?.uid;
+
+    if(!userId) return;
+
+    const userGroup = await groupContext?.getGroupByUser(userId);
+
+    if(!userGroup) return;
+
+    //@ts-ignore Bad Typing
+    setGroupTasks(userGroup.taskList) 
+ }
+
+  useEffect(() => {
+    const fetchUserGroupTasks = async () => {
+      const userId = auth.user?.uid;
+
+      if(!userId) return;
+
+      const userGroup = await groupContext?.getGroupByUser(userId);
+
+      if(!userGroup) return;
+
+      //@ts-ignore Bad Typing
+      setGroupTasks(userGroup.taskList) 
+    }
+
+    fetchUserGroupTasks().catch(console.error);
+  }, [isFocused]);
+
   return (
     <View>
       <TopBar></TopBar>
       <View style={styles.view}>
-        <View>
+        <View style={styles.listView}>
           <Text style={styles.textHeader}>To-Do List</Text>
-          {list.map((item) => (
-            <TodoList
-              item={item}
-              key={item.value}
-              deleteItem={handleDeleteTask}
-              selectItem={handleSelectTask}
-            ></TodoList>
-          ))}
+          {
+            groupTasks === undefined ? <ActivityIndicator></ActivityIndicator> :
+            <View>
+              {groupTasks.map((item) => (
+                <TodoList
+                  item={item}
+                  key={item.value}
+                  deleteItem={() => handleDeleteTask(item)}
+                  selectItem={handleSelectTask}
+                ></TodoList>
+              ))}
+            </View>
+          }
         </View>
-        <TouchableOpacity style={styles.submitButton} onPress={() => {}}>
+        <TouchableOpacity style={styles.submitButton} onPress={() => {
+          navi.navigate('CreateTask')}}>
           <Text style={styles.textBottom}>Create Task</Text>
         </TouchableOpacity>
       </View>
@@ -42,6 +100,10 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
   },
+  listView:{
+    width:'100%',
+    alignItems:'center',
+  },
   submitButton: {
     backgroundColor: colors.primary,
     width: '40%',
@@ -53,11 +115,11 @@ const styles = StyleSheet.create({
   textHeader: {
     fontSize: 24,
     color: colors.heading,
-    marginBottom: 20,
-    marginLeft: 120,
+    textAlign:'center',
+    marginBottom:25
   },
   textBottom: {
-    fontSize: 24,
+    fontSize: 20,
     color: 'white',
   },
 });
