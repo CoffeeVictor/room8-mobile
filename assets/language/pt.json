@@ -63,6 +63,9 @@
     "registerInputPassword": "Digite sua senha",
 
     "notifications": "Notificações",
-    "noNotifications": "Nenhuma notificação encontrada"
+    "noNotifications": "Nenhuma notificação encontrada",
+
+    "cost": "pagou",
+    "costTo": "para"
   }
 }

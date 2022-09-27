@@ -64,6 +64,9 @@
     "registerInputPassword": "Type your password",
 
     "notifications": "Notifications",
-    "noNotifications": "No notifications found"
+    "noNotifications": "No notifications found",
+
+    "cost": "give",
+    "costTo": "to"
   }
 }

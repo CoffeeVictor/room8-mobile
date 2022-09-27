@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     width: '80%',
     flexDirection: 'column',
     justifyContent: 'flex-end',
+    marginTop: 30,
   },
   formInput: {
     backgroundColor: 'white',
@@ -99,6 +100,7 @@ const styles = StyleSheet.create({
   buttonArea: {
     flex: 0.2,
     width: '80%',
+
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',

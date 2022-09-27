@@ -3,11 +3,10 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../../constants/Colors';
 
-
 export type ShoppingItem = {
   value: string;
   quantity: number;
-}
+};
 interface ProductProps {
   item: ShoppingItem;
   deleteItem: Function;
@@ -33,9 +32,10 @@ const styles = StyleSheet.create({
   listContainer: {
     backgroundColor: 'white',
     height: 'auto',
-    width: 350,
+    width: '90%',
     marginBottom: 30,
     borderRadius: 10,
+    marginLeft: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
