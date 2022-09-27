@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { TopBar } from '../../components/TobBar';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import { TaskItem, TodoList } from './ItemList';
 import { colors } from '../../constants/Colors';
 import { useLan } from '../../contexts/LanguageContext';
@@ -17,20 +23,20 @@ export const ToDoListPage: React.FC = () => {
   const userContext = useUser();
   const navi = useNavigation();
   const isFocused = useIsFocused();
-  const [groupTasks,setGroupTasks] = useState<TaskItem[]>([])
+  const [groupTasks, setGroupTasks] = useState<TaskItem[]>([]);
   const [list] = useState([]);
 
   const handleDeleteTask = async (item: TaskItem) => {
     const userId = auth.user?.uid;
-    if(!userId) return;
-    
+    if (!userId) return;
+
     const user = await userContext?.getUser(userId);
 
     const groupId = user?.group;
 
-    if(!groupId) return;
+    if (!groupId) return;
 
-    await groupContext?.deleteTaskItemById(groupId,item);
+    await groupContext?.deleteTaskItemById(groupId, item);
 
     fetchUserGroupTasks();
   };
@@ -39,29 +45,29 @@ export const ToDoListPage: React.FC = () => {
   async function fetchUserGroupTasks() {
     const userId = auth.user?.uid;
 
-    if(!userId) return;
+    if (!userId) return;
 
     const userGroup = await groupContext?.getGroupByUser(userId);
 
-    if(!userGroup) return;
+    if (!userGroup) return;
 
     //@ts-ignore Bad Typing
-    setGroupTasks(userGroup.taskList) 
- }
+    setGroupTasks(userGroup.taskList);
+  }
 
   useEffect(() => {
     const fetchUserGroupTasks = async () => {
       const userId = auth.user?.uid;
 
-      if(!userId) return;
+      if (!userId) return;
 
       const userGroup = await groupContext?.getGroupByUser(userId);
 
-      if(!userGroup) return;
+      if (!userGroup) return;
 
       //@ts-ignore Bad Typing
-      setGroupTasks(userGroup.taskList) 
-    }
+      setGroupTasks(userGroup.taskList);
+    };
 
     fetchUserGroupTasks().catch(console.error);
   }, [isFocused]);
@@ -72,9 +78,10 @@ export const ToDoListPage: React.FC = () => {
       <View style={styles.view}>
         <View style={styles.listView}>
           <Text style={styles.textHeader}>{language.toDoList}</Text>
-          {
-            groupTasks === undefined ? <ActivityIndicator></ActivityIndicator> :
-            <View>
+          {groupTasks === undefined ? (
+            <ActivityIndicator></ActivityIndicator>
+          ) : (
+            <ScrollView>
               {groupTasks.map((item) => (
                 <TodoList
                   item={item}
@@ -83,11 +90,15 @@ export const ToDoListPage: React.FC = () => {
                   selectItem={handleSelectTask}
                 ></TodoList>
               ))}
-            </View>
-          }
+            </ScrollView>
+          )}
         </View>
-        <TouchableOpacity style={styles.submitButton} onPress={() => {
-          navi.navigate('CreateTask')}}>
+        <TouchableOpacity
+          style={styles.submitButton}
+          onPress={() => {
+            navi.navigate('CreateTask');
+          }}
+        >
           <Text style={styles.textBottom}>{language.toDoListButton}</Text>
         </TouchableOpacity>
       </View>
@@ -103,9 +114,9 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
   },
-  listView:{
-    width:'100%',
-    alignItems:'center',
+  listView: {
+    width: '100%',
+    alignItems: 'center',
   },
   submitButton: {
     backgroundColor: colors.primary,
@@ -118,8 +129,8 @@ const styles = StyleSheet.create({
   textHeader: {
     fontSize: 24,
     color: colors.heading,
-    textAlign:'center',
-    marginBottom:25
+    textAlign: 'center',
+    marginBottom: 25,
   },
   textBottom: {
     fontSize: 20,

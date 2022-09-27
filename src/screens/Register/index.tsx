@@ -5,10 +5,11 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { colors } from '../../constants/Colors';
 import { useAuth } from '../../contexts/AuthContext';
+import { useLan } from '../../contexts/LanguageContext';
 
 export const Register: React.FC = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -16,15 +17,15 @@ export const Register: React.FC = () => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const auth = useAuth();
-
+  const { language } = useLan();
 
   return (
     <KeyboardAvoidingView style={styles.container}>
       <View style={styles.formContainer}>
-        <Text style={styles.registerHeader}>Register</Text>
+        <Text style={styles.registerHeader}>{language.registerPage}</Text>
         <TextInput
           style={styles.formInput}
-          placeholder={'Type your user name'}
+          placeholder={language.registerInputName}
           keyboardType={'email-address'}
           value={userName}
           onChangeText={setUserName}
@@ -32,7 +33,7 @@ export const Register: React.FC = () => {
         />
         <TextInput
           style={styles.formInput}
-          placeholder={'Type your email'}
+          placeholder={language.registerInputEmail}
           keyboardType={'email-address'}
           value={email}
           onChangeText={setEmail}
@@ -40,7 +41,7 @@ export const Register: React.FC = () => {
         />
         <TextInput
           style={styles.formInput}
-          placeholder={'Type your password'}
+          placeholder={language.registerInputPassword}
           secureTextEntry={!isPasswordVisible}
           value={password}
           onChangeText={setPassword}
@@ -54,7 +55,7 @@ export const Register: React.FC = () => {
             auth?.register(email, password, userName);
           }}
         >
-          <Text style={styles.registerText}>Register</Text>
+          <Text style={styles.registerText}>{language.registerPageButton}</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

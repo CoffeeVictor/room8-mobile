@@ -53,6 +53,11 @@
     },
     "shareGroup": "Share Group",
     "pays": "Pays",
-    "receives": "Receives"
+    "receives": "Receives",
+    "registerPage": "Register",
+    "registerPageButton": "Register",
+    "registerInputName": "Type your name",
+    "registerInputEmail": "Type your email",
+    "registerInputPassword": "Type your password"
   }
 }

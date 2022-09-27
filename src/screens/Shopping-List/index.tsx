@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { TopBar } from '../../components/TobBar';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import { Product, ShoppingItem } from './ItemList';
 import { colors } from '../../constants/Colors';
 import { useLan } from '../../contexts/LanguageContext';
@@ -13,56 +19,54 @@ import { useUser } from '../../contexts/UserContext';
 export const ShoppingList: React.FC = () => {
   const auth = useAuth() as IAuthValue;
   const groupContext = useGroup();
-  const userContext = useUser()
+  const userContext = useUser();
   const navi = useNavigation();
   const [list, setList] = useState([]);
   const { language } = useLan();
   const isFocused = useIsFocused();
-  const [groupShopping,setGroupShopping] = useState<ShoppingItem[]>()
+  const [groupShopping, setGroupShopping] = useState<ShoppingItem[]>();
 
   async function fetchUserGroupShopping() {
     const userId = auth.user?.uid;
 
-    if(!userId) return;
+    if (!userId) return;
 
     const userGroup = await groupContext?.getGroupByUser(userId);
 
-    if(!userGroup) return;
+    if (!userGroup) return;
 
     //@ts-ignore Bad Typing
-    setGroupShopping(userGroup.shoppingList) 
- }
+    setGroupShopping(userGroup.shoppingList);
+  }
 
   useEffect(() => {
     const fetchUserGroupShopping = async () => {
       const userId = auth.user?.uid;
 
-      if(!userId) return;
+      if (!userId) return;
 
       const userGroup = await groupContext?.getGroupByUser(userId);
 
-      if(!userGroup) return;
+      if (!userGroup) return;
 
       //@ts-ignore Bad Typing
-      setGroupShopping(userGroup.shoppingList)
-    }
+      setGroupShopping(userGroup.shoppingList);
+    };
 
     fetchUserGroupShopping().catch(console.error);
   }, [isFocused]);
 
-
-
   const handleDeleteItem = async (item: ShoppingItem) => {
     const userId = auth.user?.uid;
-    if(!userId) return;
-    
+    if (!userId) return;
+
     const user = await userContext?.getUser(userId);
 
     const groupId = user?.group;
 
-    if(!groupId) return;
+    if (!groupId) return;
 
-    await groupContext?.deleteShoppingItemById(groupId,item);
+    await groupContext?.deleteShoppingItemById(groupId, item);
 
     fetchUserGroupShopping();
   };
@@ -73,17 +77,19 @@ export const ShoppingList: React.FC = () => {
         <Text style={styles.textHeader}>{language.shoppingList}</Text>
         <View>
           <Text style={styles.textHeader}>Shopping List</Text>
-          {groupShopping === undefined ? <ActivityIndicator></ActivityIndicator> :
-          <View>
-            {groupShopping?.map((item) => (
-              <Product
-                item={item}
-                key={item.value}
-                deleteItem={() => handleDeleteItem(item)}
-              ></Product>
-            ))}
-          </View>
-          }
+          {groupShopping === undefined ? (
+            <ActivityIndicator></ActivityIndicator>
+          ) : (
+            <ScrollView>
+              {groupShopping?.map((item) => (
+                <Product
+                  item={item}
+                  key={item.value}
+                  deleteItem={() => handleDeleteItem(item)}
+                ></Product>
+              ))}
+            </ScrollView>
+          )}
         </View>
         <TouchableOpacity
           style={styles.submitButton}
@@ -116,7 +122,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: colors.heading,
     marginBottom: 20,
-    textAlign:'center'
+    textAlign: 'center',
   },
   textBottom: {
     fontSize: 24,

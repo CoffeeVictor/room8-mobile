@@ -52,6 +52,11 @@
     },
     "shareGroup": "Compartilhar Grupo",
     "pays": "Paga",
-    "receives": "Recebe"
+    "receives": "Recebe",
+    "registerPage": "Cadastro",
+    "registerPageButton": "Cadastrar",
+    "registerInputName": "Digite seu nome",
+    "registerInputEmail": "Digite seu email",
+    "registerInputPassword": "Digite sua senha"
   }
 }
