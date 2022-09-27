@@ -17,6 +17,7 @@ import { Notifications } from '../screens/Notifications';
 import { ShoppingList } from '../screens/Shopping-List';
 import { CreatProduct } from '../screens/Shopping-List/CreateProduct';
 import { ToDoListPage } from '../screens/To-do';
+import { CreatTask } from '../screens/To-do/CreateTask';
 
 export default function Navigation() {
   return (
@@ -62,11 +63,8 @@ function RootNavigator() {
           options={{ headerShown: false }}
         />
       )}
-      <Stack.Screen
-        name='Create'
-        component={CreateGroup}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name='Create' component={CreateGroup} options={{ headerShown: false }} />
+      <Stack.Screen name='CreateTask' component={CreatTask} options={{ headerShown: false }} />
       <Stack.Screen name='Home' component={Home} />
       <Stack.Screen name='ToDoList' component={ToDoListPage} />
       <Stack.Screen name='ShopList' component={ShoppingList} />
