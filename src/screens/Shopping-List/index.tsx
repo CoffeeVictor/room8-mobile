@@ -75,7 +75,7 @@ export const ShoppingList: React.FC = () => {
       <TopBar></TopBar>
       <View style={styles.view}>
         <Text style={styles.textHeader}>{language.shoppingList}</Text>
-        <View>
+        <View style={styles.listView}>
           {groupShopping === undefined ? (
             <ActivityIndicator></ActivityIndicator>
           ) : (
@@ -115,6 +115,10 @@ const styles = StyleSheet.create({
     padding: 15,
     marginTop: 10,
     borderRadius: 10,
+    alignItems: 'center',
+  },
+  listView: {
+    width: '90%',
     alignItems: 'center',
   },
   textHeader: {

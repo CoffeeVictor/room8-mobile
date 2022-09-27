@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 
   textItem: {
     color: colors.heading,
-    width: 100,
+    width: '60%',
     height: 'auto',
     fontSize: 24,
     marginTop: 10,

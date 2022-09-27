@@ -76,13 +76,13 @@ export const ToDoListPage: React.FC = () => {
     <View>
       <TopBar></TopBar>
       <View style={styles.view}>
-        <View>
+        <View style={styles.listView}>
           <Text style={styles.textHeader}>{language.toDoList}</Text>
           {groupTasks === undefined ? (
             <ActivityIndicator></ActivityIndicator>
           ) : (
-            <View>
-              {groupTasks?.map((item) => (
+            <ScrollView>
+              {groupTasks.map((item) => (
                 <TodoList
                   item={item}
                   key={item.value}
@@ -90,7 +90,7 @@ export const ToDoListPage: React.FC = () => {
                   selectItem={handleSelectTask}
                 ></TodoList>
               ))}
-            </View>
+            </ScrollView>
           )}
         </View>
         <TouchableOpacity
