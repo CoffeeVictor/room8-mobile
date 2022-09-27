@@ -1,14 +1,13 @@
 import { AntDesign } from '@expo/vector-icons';
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
-import { ScrollView, StyleSheet, Alert, ToastAndroid } from 'react-native';
-import { colors } from '../../../constants/Colors';
-import { DataTable } from 'react-native-paper';
-import { useGroup } from '../../../contexts/GroupContext';
 import { useEffect, useState } from 'react';
-import { useUser } from '../../../contexts/UserContext';
+import { Alert, ToastAndroid, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { DataTable } from 'react-native-paper';
+import { colors } from '../../../constants/Colors';
 import { IAuthValue, useAuth } from '../../../contexts/AuthContext';
+import { useGroup } from '../../../contexts/GroupContext';
 import { useLan } from '../../../contexts/LanguageContext';
 import * as Clipboard from 'expo-clipboard';
+import { useUser } from '../../../contexts/UserContext';
 
 interface Item {
   name: string;
@@ -85,7 +84,7 @@ export const HomeList: React.FC = ({ people }) => {
           style={styles.buttonAdd}
           onPress={shareGroupAlert}
         >
-          <Text style={styles.textButton}>{language.homeShareButton}</Text>
+          <Text style={styles.textButton}>{language.shareGroup}</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>

@@ -46,6 +46,18 @@
     "costValue": "Valor",
     "costButton": "Calcular resultados",
 
-    "HomeListName": "Lista de Integrantes"
+    "HomeListName": "Lista de Integrantes",
+    "HomeListStatus": "Status",
+    "HomeListExpense": "R$",
+    "BottomTab": {
+      "Home": "Início",
+      "Notifications": "Notificações",
+      "Costs": "Gastos",
+      "ToDoList": "Afazeres",
+      "ShoppingList": "Compras"
+    },
+    "shareGroup": "Compartilhar Grupo",
+    "pays": "Paga",
+    "receives": "Recebe"
   }
 }
