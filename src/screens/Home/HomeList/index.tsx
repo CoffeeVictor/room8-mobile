@@ -1,11 +1,12 @@
 import { AntDesign } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, ToastAndroid, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { colors } from '../../../constants/Colors';
 import { IAuthValue, useAuth } from '../../../contexts/AuthContext';
 import { useGroup } from '../../../contexts/GroupContext';
 import { useLan } from '../../../contexts/LanguageContext';
+import * as Clipboard from 'expo-clipboard';
 import { useUser } from '../../../contexts/UserContext';
 
 interface Item {
@@ -35,12 +36,29 @@ export const HomeList: React.FC = ({ people }) => {
       if (!groupId) return;
 
       setGroupId(groupId);
-
-      console.log('set group', groupId);
     };
 
     checkUserGroup().catch(console.error);
   }, []);
+
+  const shareGroupAlert = () =>
+    Alert.alert(
+      language.homeShareAlertTitle,
+      groupId,
+      [
+        {
+          text: language.homeShareAlertButton,
+          onPress: () => {
+            Clipboard.setStringAsync(groupId)
+            ToastAndroid.show(language.homeShareToastMessage,ToastAndroid.SHORT)
+          }
+        },
+        {
+          text: 'Ok'
+        }
+      ]
+    );
+  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -51,38 +69,11 @@ export const HomeList: React.FC = ({ people }) => {
               <DataTable.Title>
                 <Text style={styles.textTable}>{language.HomeListName}</Text>
               </DataTable.Title>
-              <DataTable.Title>
-                <Text style={styles.textTable}>{language.HomeListStatus}</Text>
-              </DataTable.Title>
-              <DataTable.Title numeric>
-                <Text style={styles.textTable}>{language.HomeListExpense}</Text>
-              </DataTable.Title>
-              <DataTable.Title>-</DataTable.Title>
             </DataTable.Header>
             {people?.map((item: Item) => (
               <DataTable.Row style={styles.text} key={item.name + 'row'}>
                 <DataTable.Cell>
                   <Text style={styles.text}>{item.name}</Text>
-                </DataTable.Cell>
-                <DataTable.Cell>
-                  <Text style={styles.text}> {item.status}</Text>
-                </DataTable.Cell>
-                <DataTable.Cell numeric>
-                  <Text style={styles.text}> {item.totalexpense}</Text>
-                </DataTable.Cell>
-                <DataTable.Cell>
-                  {
-                    <TouchableOpacity
-                      style={styles.buttonRemove}
-                      onPress={() => console.log('remove')}
-                    >
-                      <AntDesign
-                        name='delete'
-                        size={20}
-                        color={colors.primary}
-                      ></AntDesign>
-                    </TouchableOpacity>
-                  }
                 </DataTable.Cell>
               </DataTable.Row>
             ))}
@@ -91,7 +82,7 @@ export const HomeList: React.FC = ({ people }) => {
 
         <TouchableOpacity
           style={styles.buttonAdd}
-          onPress={() => console.log(groupId)}
+          onPress={shareGroupAlert}
         >
           <Text style={styles.textButton}>{language.shareGroup}</Text>
         </TouchableOpacity>

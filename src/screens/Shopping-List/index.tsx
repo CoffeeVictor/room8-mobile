@@ -72,7 +72,6 @@ export const ShoppingList: React.FC = () => {
       <View style={styles.view}>
         <Text style={styles.textHeader}>{language.shoppingList}</Text>
         <View>
-          <Text style={styles.textHeader}>Shopping List</Text>
           {groupShopping === undefined ? <ActivityIndicator></ActivityIndicator> :
           <View>
             {groupShopping?.map((item) => (
