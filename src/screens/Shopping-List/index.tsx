@@ -3,29 +3,22 @@ import { TopBar } from '../../components/TobBar';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Product, ShoppingItem } from './ItemList';
 import { colors } from '../../constants/Colors';
-<<<<<<< feature/secon-language
-import { useNavigation } from '@react-navigation/native';
 import { useLan } from '../../contexts/LanguageContext';
-=======
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { ActivityIndicator } from 'react-native-paper';
 import { IAuthValue, useAuth } from '../../contexts/AuthContext';
 import { useGroup } from '../../contexts/GroupContext';
 import { useUser } from '../../contexts/UserContext';
->>>>>>> dev
 
 export const ShoppingList: React.FC = () => {
   const auth = useAuth() as IAuthValue;
   const groupContext = useGroup();
   const userContext = useUser()
   const navi = useNavigation();
-<<<<<<< feature/secon-language
   const [list, setList] = useState([]);
   const { language } = useLan();
-=======
   const isFocused = useIsFocused();
   const [groupShopping,setGroupShopping] = useState<ShoppingItem[]>()
->>>>>>> dev
 
   async function fetchUserGroupShopping() {
     const userId = auth.user?.uid;
@@ -123,12 +116,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: colors.heading,
     marginBottom: 20,
-<<<<<<< feature/secon-language
-    marginLeft: 10,
-    alignItems: 'center',
-=======
     textAlign:'center'
->>>>>>> dev
   },
   textBottom: {
     fontSize: 24,
