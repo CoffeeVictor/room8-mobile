@@ -1,9 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import {
-  StyleSheet, Text, TextInput,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -101,7 +104,7 @@ export const Home: React.FC = () => {
         {userHasGroup == -1 ? (
           <ActivityIndicator />
         ) : userHasGroup === 0 ? (
-          <SafeAreaView>
+          <ScrollView style={styles.scrollview}>
             <Text style={styles.text}>{language.homeTextNoGroup}</Text>
             <Text style={styles.text}>{language.homeTextJoinGroup}</Text>
             <TouchableOpacity
@@ -130,7 +133,7 @@ export const Home: React.FC = () => {
                 {language.homeJoinGroupButton}
               </Text>
             </TouchableOpacity>
-          </SafeAreaView>
+          </ScrollView>
         ) : (
           <View style={styles.view}>
             <Text style={styles.welcomeText}>{language.homeWelcomeGroup} {groupName}!</Text>
@@ -153,6 +156,9 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
+  },
+  scrollview: {
+    marginBottom: 90,
   },
   view: {
     marginBottom: 10,

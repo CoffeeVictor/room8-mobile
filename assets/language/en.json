@@ -50,6 +50,7 @@
     "HomeListName": "Member List",
     "HomeListStatus": "Status",
     "HomeListExpense": "R$",
+
     "BottomTab": {
       "Home": "Home",
       "Notifications": "Notifications",
@@ -57,8 +58,21 @@
       "ToDoList": "To Do List",
       "ShoppingList": "Shopping List"
     },
+
     "shareGroup": "Share Group",
     "pays": "Pays",
-    "receives": "Receives"
+    "receives": "Receives",
+
+    "registerPage": "Register",
+    "registerPageButton": "Register",
+    "registerInputName": "Type your name",
+    "registerInputEmail": "Type your email",
+    "registerInputPassword": "Type your password",
+
+    "notifications": "Notifications",
+    "noNotifications": "No notifications found",
+
+    "cost": "give",
+    "costTo": "to"
   }
 }

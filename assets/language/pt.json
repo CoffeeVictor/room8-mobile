@@ -50,6 +50,7 @@
     "HomeListName": "Lista de Integrantes",
     "HomeListStatus": "Status",
     "HomeListExpense": "R$",
+
     "BottomTab": {
       "Home": "Início",
       "Notifications": "Notificações",
@@ -57,8 +58,21 @@
       "ToDoList": "Afazeres",
       "ShoppingList": "Compras"
     },
+
     "shareGroup": "Compartilhar Grupo",
     "pays": "Paga",
-    "receives": "Recebe"
+    "receives": "Recebe",
+
+    "registerPage": "Cadastro",
+    "registerPageButton": "Cadastrar",
+    "registerInputName": "Digite seu nome",
+    "registerInputEmail": "Digite seu email",
+    "registerInputPassword": "Digite sua senha",
+
+    "notifications": "Notificações",
+    "noNotifications": "Nenhuma notificação encontrada",
+
+    "cost": "pagou",
+    "costTo": "para"
   }
 }

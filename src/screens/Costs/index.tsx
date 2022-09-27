@@ -2,11 +2,12 @@ import { Feather } from '@expo/vector-icons';
 import { Timestamp } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import {
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import { CostItem, CostItemDTO } from '../../components/CostItem';
@@ -156,13 +157,15 @@ export const Costs: React.FC = () => {
         <ActivityIndicator />
       ) : (
         <View style={styles.costsAreaContainer}>
-          {groupCosts.map((item, index) => (
-            <CostItem
-              handleDelete={() => handleDelete(item)}
-              item={item}
-              key={index}
-            />
-          ))}
+          <ScrollView>
+            {groupCosts.map((item, index) => (
+              <CostItem
+                handleDelete={() => handleDelete(item)}
+                item={item}
+                key={index}
+              />
+            ))}
+          </ScrollView>
         </View>
       )}
     </View>

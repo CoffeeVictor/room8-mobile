@@ -4,11 +4,10 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../../constants/Colors';
 import { Checkbox } from 'react-native-paper';
 
-
 export type TaskItem = {
   value: string;
   people: string;
-}
+};
 interface TodoProps {
   item: TaskItem;
   deleteItem: Function;
@@ -45,9 +44,10 @@ const styles = StyleSheet.create({
   listContainer: {
     backgroundColor: 'white',
     height: 'auto',
-    width: 350,
+    width: '85%',
     marginBottom: 30,
     borderRadius: 10,
+    marginLeft: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 
   textItem: {
     color: colors.heading,
-    width: 260,
+    width: '100%',
     height: 'auto',
     fontSize: 20,
     marginTop: 10,
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginRight: 20,
     borderRadius: 10,
-    width: 100,
+    width: '100%',
   },
 
   iconContainer: {
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  cirlceContainer: {
+  circleContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     paddingLeft: 5,
