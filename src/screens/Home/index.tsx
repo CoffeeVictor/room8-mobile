@@ -28,6 +28,7 @@ export const Home: React.FC = () => {
     { name: 'Rodrigues', totalexpense: '23.43', status: 'Receive' },
     { name: 'Victor', totalexpense: '0', status: 'Ok' },
   ];
+  const [memberList,setMemberList] = useState([])
   const [groupId, setGroupId] = useState('');
   const [group, setGroup] = useState('');
   const [userHasGroup, setUserHasGroup] = useState(-1);
@@ -50,11 +51,28 @@ export const Home: React.FC = () => {
 
       setGroup(groupId);
       setUserHasGroup(1);
-
-      console.log('set group', groupId);
     };
 
+    const getMemberList = async () =>{
+      const userId = auth.user?.uid;
+
+      if (!userId) return;
+
+      const user = await userContext?.getUser(userId);
+
+      const groupId = user?.group;
+
+      if(!groupId) return;
+
+      const list = await userContext?.getUsersByGroup(groupId)
+      
+      if(!list) return;
+
+      setMemberList(list)
+    }
+
     checkUserGroup().catch(console.error);
+    getMemberList().catch(console.error);
   }, []);
 
   const onJoinButtonPressed = async () => {
@@ -105,7 +123,10 @@ export const Home: React.FC = () => {
             </TouchableOpacity>
           </SafeAreaView>
         ) : (
-          <HomeList people={people}></HomeList>
+          <View style={styles.view}>
+            <Text style={styles.welcomeText}>Bem vindo ao grupo X!</Text>
+            <HomeList people={memberList}></HomeList>
+          </View>    
         )}
       </SafeAreaView>
     </View>
@@ -140,6 +161,13 @@ const styles = StyleSheet.create({
     color: colors.heading,
     fontSize: 20,
     alignItems: 'center',
+  },
+  welcomeText: {
+    color: colors.primary,
+    fontSize: 20,
+    textAlign: 'center',
+    fontWeight: '700',
+    marginBottom: 30
   },
   button: {
     marginTop: 20,

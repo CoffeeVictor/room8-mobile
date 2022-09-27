@@ -62,7 +62,7 @@ export const CreatTask: React.FC = () => {
         <View>
           <Text style={styles.textHeader}>{language.toDoListAdding}</Text>
         </View>
-        <View style={styles.InputContainer}>
+        <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
             placeholder={language.toDoListAddTask}
