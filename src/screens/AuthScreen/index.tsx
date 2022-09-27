@@ -6,18 +6,17 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
-import { languageEn } from '../../../assets/language/en.json';
-import { languagePt } from '../../../assets/language/pt.json';
 import { colors } from '../../constants/Colors';
 import { useAuth } from '../../contexts/AuthContext';
+import { useLan } from '../../contexts/LanguageContext';
 
 export const AuthScreen: React.FC = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [language, setLanguage] = useState(languageEn);
+  const { language, setLanguage } = useLan();
   const auth = useAuth();
   const navigation = useNavigation();
 
@@ -31,11 +30,7 @@ export const AuthScreen: React.FC = () => {
   };
 
   const handleLanguage = async () => {
-    if (language.lan === 'en') {
-      setLanguage(languagePt);
-    } else {
-      setLanguage(languageEn);
-    }
+    setLanguage();
   };
 
   return (
