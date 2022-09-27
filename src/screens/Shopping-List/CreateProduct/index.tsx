@@ -10,8 +10,16 @@ import {
 } from 'react-native';
 import { Product } from '../ItemList';
 import { colors } from '../../../constants/Colors';
+import { IAuthValue, useAuth } from '../../../contexts/AuthContext';
+import { useUser } from '../../../contexts/UserContext';
+import { useGroup } from '../../../contexts/GroupContext';
+import { useNavigation } from '@react-navigation/native';
 
 export const CreatProduct: React.FC = () => {
+  const auth = useAuth() as IAuthValue;
+  const userContext = useUser()
+  const groupContext = useGroup()
+  const navi = useNavigation()
   const [value, setValue] = useState('');
   const [quantity, setQuantity] = useState(0);
   const [list, setList] = useState([]);
@@ -24,10 +32,24 @@ export const CreatProduct: React.FC = () => {
     setQuantity(num2);
   };
 
-  const handleCreateTask = useCallback(() => {
-    const task = { value: value, quantity: quantity };
-    setList((list) => [...list, task]);
-  }, [list]);
+
+  const handleCreateTask = async () => {
+    const userId = auth.user?.uid;
+    if(!userId) return;
+    
+    const user = await userContext?.getUser(userId);
+
+    const groupId = user?.group;
+
+    if(!groupId || !value || !quantity) return;
+
+    await groupContext?.addShoppingItemToGroup(groupId, {
+      value: value,
+      quantity: quantity
+    }).then(_doc =>{
+      navi.goBack()
+    })
+  };
 
   const handleDeleteProduct = () => {};
 

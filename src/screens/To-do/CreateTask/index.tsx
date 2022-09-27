@@ -10,13 +10,21 @@ import {
 } from 'react-native';
 import { TodoList } from '../ItemList';
 import { colors } from '../../../constants/Colors';
+import { useNavigation } from '@react-navigation/native';
+import { IAuthValue, useAuth } from '../../../contexts/AuthContext';
+import { useGroup } from '../../../contexts/GroupContext';
+import { useUser } from '../../../contexts/UserContext';
 
 export const CreatTask: React.FC = () => {
+  const auth = useAuth() as IAuthValue
+  const groupContext = useGroup()
+  const userContext = useUser()
   const [value, setValue] = useState('');
   const [people, setPeople] = useState('');
   const [list, setList] = useState([
     { value: 'Clean the table', people: 'Maely' },
   ]);
+  const navi = useNavigation()
 
   const onChangeValue = (text: string) => {
     setValue(text);
@@ -25,29 +33,30 @@ export const CreatTask: React.FC = () => {
     setPeople(text);
   };
 
-  const handleCreatTask = () => {
-    const task = { value: value, people: people };
-    setList([...list, task]);
+
+  const handleCreatTask = async () => {
+    const userId = auth.user?.uid;
+    if(!userId) return;
+    
+    const user = await userContext?.getUser(userId);
+
+    const groupId = user?.group;
+
+    if(!groupId || !value || !people) return;
+
+    await groupContext?.addTaskItemToGroup(groupId, {
+      value: value,
+      people: people
+    }).then(_doc =>{
+      navi.goBack()
+    })
   };
-
-  function handleDeleteTask() {}
-  function handleSelectTask() {}
-
   return (
     <View>
       <TopBar></TopBar>
       <View style={styles.view}>
         <View>
           <Text style={styles.TextHeader}> Adding To To-Do List</Text>
-        </View>
-        <View>
-          {list.map((item) => {
-            <TodoList
-              item={item}
-              deleteItem={handleDeleteTask}
-              selectItem={handleSelectTask}
-            ></TodoList>;
-          })}
         </View>
         <View style={styles.InputContainer}>
           <TextInput

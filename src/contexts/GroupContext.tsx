@@ -4,6 +4,8 @@ import { IGroup } from "../backend/models/group";
 import { GroupRepository } from "../backend/repositories/groupRepository";
 import { createContext, useContext, useState } from "react";
 import { CostItemDTO } from "../components/CostItem";
+import { TaskItem } from "../screens/To-do/ItemList";
+import { ShoppingItem } from "../screens/Shopping-List/ItemList";
 
 interface IGroupValue {
   group: IGroup | null,
@@ -15,6 +17,10 @@ interface IGroupValue {
   addUserToGroup: (groupDocID: string, usersDocID: string[]) => Promise<void>,
   addCostItemToGroup: (groupDocID: string, item: CostItemDTO) => Promise<void>,
   deleteCostItemById: (groupDocID: string, costItem: CostItemDTO) => Promise<void>,
+  addTaskItemToGroup: (groupDocID: string, item: TaskItem) => Promise<void>,
+  deleteTaskItemById: (groupDocID: string, item: TaskItem) => Promise<void>,
+  addShoppingItemToGroup: (groupDocID: string, item: ShoppingItem) => Promise<void>,
+  deleteShoppingItemById: (groupDocID: string, item: ShoppingItem) => Promise<void>,
 }
 
 const GroupContext = createContext<IGroupValue | null>(null);
@@ -140,6 +146,46 @@ export const GroupProvider: React.FC = ({children}) => {
     }
   }
 
+  const addTaskItemToGroup = async (groupDocID: string, item: TaskItem) => {
+    try {
+      return await groupRepository.updateGroup(groupDocID, {
+        taskList: arrayUnion(item)
+      });
+    } catch (e) {
+      console.error("addTaskItemToGroup", e);
+    }
+  }
+
+  const deleteTaskItemById = async (groupDocID: string, item: TaskItem) => {
+    try {
+      return await groupRepository.updateGroup(groupDocID, {
+        taskList: arrayRemove(item)
+      });
+    } catch (e) {
+      console.error("deleteTaskItemById", e);
+    }
+  }
+
+  const addShoppingItemToGroup = async (groupDocID: string, item: ShoppingItem) => {
+    try {
+      return await groupRepository.updateGroup(groupDocID, {
+        shoppingList: arrayUnion(item)
+      });
+    } catch (e) {
+      console.error("addShoppingItemToGroup", e);
+    }
+  }
+
+  const deleteShoppingItemById = async (groupDocID: string, item: ShoppingItem) => {
+    try {
+      return await groupRepository.updateGroup(groupDocID, {
+        shoppingList: arrayRemove(item)
+      });
+    } catch (e) {
+      console.error("deleteShoppingItemById", e);
+    }
+  }
+
   const value = {
     group,
     setActiveGroup,
@@ -149,7 +195,11 @@ export const GroupProvider: React.FC = ({children}) => {
     createGroup,
     addUserToGroup,
     addCostItemToGroup,
-    deleteCostItemById
+    deleteCostItemById,
+    addTaskItemToGroup,
+    deleteTaskItemById,
+    addShoppingItemToGroup,
+    deleteShoppingItemById
   }
 
   return (
