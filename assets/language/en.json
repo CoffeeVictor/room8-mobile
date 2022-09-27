@@ -43,6 +43,16 @@
 
     "HomeListName": "Name",
     "HomeListStatus": "Status",
-    "HomeListExpense": "R$"
+    "HomeListExpense": "R$",
+    "BottomTab": {
+      "Home": "Home",
+      "Notifications": "Notifications",
+      "Costs": "Costs",
+      "ToDoList": "To Do List",
+      "ShoppingList": "Shopping List"
+    },
+    "shareGroup": "Share Group",
+    "pays": "Pays",
+    "receives": "Receives"
   }
 }

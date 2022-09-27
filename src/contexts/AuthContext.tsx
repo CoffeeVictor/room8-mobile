@@ -1,12 +1,13 @@
 import { FirebaseError } from "firebase/app";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, UserCredential } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
+import { UserRepository } from "../backend/repositories/userRepository";
 import { auth } from "../config/firebase";
 
 export interface IAuthValue {
     user: User | null,
     login: (email: string, password: string) => Promise<UserCredential | undefined>,
-    register: (email: string, password: string) => Promise<UserCredential | undefined>,
+    register: (email: string, password: string, username: string) => Promise<UserCredential | undefined>,
     logout: () => Promise<void>
 }
 
@@ -37,13 +38,24 @@ export const AuthProvider: React.FC = ({children}) => {
         }
     }
 
-    async function register(email: string, password: string) {
+    async function register(email: string, password: string, username: string) {
         try {
-            return await createUserWithEmailAndPassword(
+            const user = await createUserWithEmailAndPassword(
                 auth,
                 email,
                 password
-            )
+            );
+
+            const userRepository = new UserRepository();
+
+            await userRepository.createUser({
+                id: user.user.uid,
+                name: username,
+                email,
+                password
+            })
+
+            return user;
         }
         catch(e) {
 

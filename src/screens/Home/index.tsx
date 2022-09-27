@@ -1,33 +1,26 @@
+import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import {
-  StyleSheet,
-  TextInput,
+  StyleSheet, Text, TextInput,
   TouchableOpacity,
-  View,
-  Text,
+  View
 } from 'react-native';
+import { ActivityIndicator } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TopBar } from '../../components/TobBar';
 import { colors } from '../../constants/Colors';
-import { HomeList } from './HomeList';
-import { useNavigation } from '@react-navigation/native';
-import { useLan } from '../../contexts/LanguageContext';
-import { CreateGroup } from '../CreateGroup';
 import { IAuthValue, useAuth } from '../../contexts/AuthContext';
 import { useGroup } from '../../contexts/GroupContext';
+import { useLan } from '../../contexts/LanguageContext';
 import { useUser } from '../../contexts/UserContext';
-import { ActivityIndicator } from 'react-native-paper';
+import { HomeList } from './HomeList';
 
 export const Home: React.FC = () => {
   const auth = useAuth() as IAuthValue;
   const groupContext = useGroup();
   const userContext = useUser();
   const navi = useNavigation();
-  const people = [
-    { name: 'Maely', totalexpense: '23.43', status: 'Pay' },
-    { name: 'Rodrigues', totalexpense: '23.43', status: 'Receive' },
-    { name: 'Victor', totalexpense: '0', status: 'Ok' },
-  ];
+  const people: any = [];
   const [groupId, setGroupId] = useState('');
   const [group, setGroup] = useState('');
   const [userHasGroup, setUserHasGroup] = useState(-1);

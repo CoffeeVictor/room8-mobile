@@ -1,19 +1,19 @@
 import {
-  AntDesign,
-  Feather,
-  FontAwesome,
-  FontAwesome5,
+  AntDesign, FontAwesome,
+  FontAwesome5
 } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useLan } from '../contexts/LanguageContext';
 import { AuthScreen } from '../screens/AuthScreen';
 import { Costs } from '../screens/Costs';
 import { CreateGroup } from '../screens/CreateGroup';
 import { Home } from '../screens/Home';
 import { Notifications } from '../screens/Notifications';
+import { Register } from '../screens/Register';
 import { ShoppingList } from '../screens/Shopping-List';
 import { CreatProduct } from '../screens/Shopping-List/CreateProduct';
 import { ToDoListPage } from '../screens/To-do';
@@ -57,11 +57,18 @@ function RootNavigator() {
           options={{ headerShown: false }}
         />
       ) : (
-        <Stack.Screen
-          name='AuthScreen'
-          component={AuthScreen}
-          options={{ headerShown: false }}
-        />
+        <>
+          <Stack.Screen
+            name='AuthScreen'
+            component={AuthScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='RegisterScreen'
+            component={Register}
+            options={{ headerShown: false }}
+          />
+        </>
       )}
       <Stack.Screen name='Create' component={CreateGroup} options={{ headerShown: false }} />
       <Stack.Screen name='CreateTask' component={CreatTask} options={{ headerShown: false }} />
@@ -80,10 +87,13 @@ function RootNavigator() {
 const BottomTab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
+
+  const lang = useLan();
+
   return (
     <BottomTab.Navigator>
       <BottomTab.Screen
-        name='Home'
+        name={lang.language.BottomTab.Home}
         component={Home}
         options={{
           headerShown: false,
@@ -91,7 +101,7 @@ function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name='Notifications'
+        name={lang.language.BottomTab.Notifications}
         component={Notifications}
         options={{
           headerShown: false,
@@ -99,7 +109,7 @@ function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name='Costs'
+        name={lang.language.BottomTab.Costs}
         component={Costs}
         options={{
           headerShown: false,
@@ -107,7 +117,7 @@ function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name='To Do List'
+        name={lang.language.BottomTab.ToDoList}
         component={ToDoListPage}
         options={{
           headerShown: false,
@@ -115,7 +125,7 @@ function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name='Shopping List'
+        name={lang.language.BottomTab.ShoppingList}
         component={ShoppingList}
         options={{
           headerShown: false,

@@ -42,6 +42,16 @@
 
     "HomeListName": "Nome",
     "HomeListStatus": "Status",
-    "HomeListExpense": "R$"
+    "HomeListExpense": "R$",
+    "BottomTab": {
+      "Home": "Início",
+      "Notifications": "Notificações",
+      "Costs": "Gastos",
+      "ToDoList": "Afazeres",
+      "ShoppingList": "Compras"
+    },
+    "shareGroup": "Compartilhar Grupo",
+    "pays": "Paga",
+    "receives": "Recebe"
   }
 }

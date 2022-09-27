@@ -1,4 +1,4 @@
-import { collection, getDoc, getDocs, doc, DocumentSnapshot, DocumentData, QuerySnapshot, setDoc, query, where, updateDoc } from "firebase/firestore";
+import { collection, doc, DocumentData, DocumentSnapshot, getDoc, getDocs, query, QuerySnapshot, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from '../../config/firebase';
 import { IUser } from '../models/User';
 

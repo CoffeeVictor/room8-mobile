@@ -1,11 +1,11 @@
 import { arrayRemove, arrayUnion } from "firebase/firestore";
-import { useUser } from "./UserContext";
+import { createContext, useContext, useState } from "react";
 import { IGroup } from "../backend/models/group";
 import { GroupRepository } from "../backend/repositories/groupRepository";
-import { createContext, useContext, useState } from "react";
 import { CostItemDTO } from "../components/CostItem";
-import { TaskItem } from "../screens/To-do/ItemList";
 import { ShoppingItem } from "../screens/Shopping-List/ItemList";
+import { TaskItem } from "../screens/To-do/ItemList";
+import { useUser } from "./UserContext";
 
 interface IGroupValue {
   group: IGroup | null,
@@ -58,7 +58,7 @@ export const GroupProvider: React.FC = ({children}) => {
 
       if (data === null || data === undefined) return null;
 
-      return data as IGroup;
+      return {...data, id: docSnap.id} as IGroup;
       
     } catch (e) {
       console.error("getGroup", e);
