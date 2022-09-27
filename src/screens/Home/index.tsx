@@ -23,6 +23,7 @@ export const Home: React.FC = () => {
   const [memberList,setMemberList] = useState([])
 
   const [groupId, setGroupId] = useState('');
+  const [groupName, setGroupName] = useState('');
   const [group, setGroup] = useState('');
   const [userHasGroup, setUserHasGroup] = useState(-1);
   const { language } = useLan();
@@ -53,6 +54,8 @@ export const Home: React.FC = () => {
 
       const user = await userContext?.getUser(userId);
 
+      if(!user) return;
+
       const groupId = user?.group;
 
       if(!groupId) return;
@@ -64,8 +67,21 @@ export const Home: React.FC = () => {
       setMemberList(list)
     }
 
+    const getGroupName = async () => {
+      const userId = auth.user?.uid;
+
+      if (!userId) return;
+
+      const group = await groupContext?.getGroupByUser(userId)
+
+      if(!group) return;
+
+      setGroupName(group.name)
+    }
+
     checkUserGroup().catch(console.error);
     getMemberList().catch(console.error);
+    getGroupName().catch(console.error)
   }, []);
 
   const onJoinButtonPressed = async () => {
@@ -117,7 +133,7 @@ export const Home: React.FC = () => {
           </SafeAreaView>
         ) : (
           <View style={styles.view}>
-            <Text style={styles.welcomeText}>Bem vindo ao grupo X!</Text>
+            <Text style={styles.welcomeText}>{language.homeWelcomeGroup} {groupName}!</Text>
             <HomeList people={memberList}></HomeList>
           </View>    
         )}
