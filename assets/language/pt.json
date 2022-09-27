@@ -1,6 +1,8 @@
 {
   "languagePt": {
     "lan": "pt",
+    "lanTopBar": "Idioma:Português", 
+
     "emailInput": "Digite seu email",
     "passwordInput": "Digite sua senha",
     "loginButton": "Login",
@@ -13,6 +15,10 @@
     "homeJoinGroup": "Ou entre em um grupo já criado :",
     "homeJoinGroupInput": "Digite o código do grupo",
     "homeJoinGroupButton": " Entrar no grupo",
+    "homeShareButton": "Compartilhar código do grupo",
+    "homeShareAlertTitle": "Código do grupo",
+    "homeShareAlertButton": "Copiar",
+    "homeShareToastMessage": "Código copiado para área de transferência",
 
     "toDoList": "Lista de Afazeres",
     "toDoListButton": "Criar Tarefa",
@@ -40,7 +46,8 @@
     "costValue": "Valor",
     "costButton": "Calcular resultados",
 
-    "HomeListName": "Nome",
+    "homeWelcomeGroup": "Bem vindo ao grupo",
+    "HomeListName": "Lista de Integrantes",
     "HomeListStatus": "Status",
     "HomeListExpense": "R$",
 

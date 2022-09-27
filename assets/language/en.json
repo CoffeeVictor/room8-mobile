@@ -1,6 +1,7 @@
 {
   "languageEn": {
     "lan": "en",
+    "lanTopBar": "Language:English" , 
 
     "emailInput": "Type your email",
     "passwordInput": "Type your password",
@@ -14,6 +15,10 @@
     "homeJoinGroup": "Or join an already created group :",
     "homeJoinGroupInput": "Enter the Group Code",
     "homeJoinGroupButton": " Join Group",
+    "homeShareButton": "Share Group Code",
+    "homeShareAlertTitle": "Group Code",
+    "homeShareAlertButton": "Copy",
+    "homeShareToastMessage": "Code copied to clipboard",
 
     "toDoList": "To-Do List",
     "toDoListButton": "Create Task",
@@ -41,7 +46,8 @@
     "costValue": "Value",
     "costButton": "Calculate results",
 
-    "HomeListName": "Name",
+    "homeWelcomeGroup": "Welcome to the group",
+    "HomeListName": "Member List",
     "HomeListStatus": "Status",
     "HomeListExpense": "R$",
 

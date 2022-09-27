@@ -23,8 +23,10 @@ export const Home: React.FC = () => {
   const groupContext = useGroup();
   const userContext = useUser();
   const navi = useNavigation();
-  const people: any = [];
+  const [memberList,setMemberList] = useState([])
+
   const [groupId, setGroupId] = useState('');
+  const [groupName, setGroupName] = useState('');
   const [group, setGroup] = useState('');
   const [userHasGroup, setUserHasGroup] = useState(-1);
   const { language } = useLan();
@@ -46,11 +48,43 @@ export const Home: React.FC = () => {
 
       setGroup(groupId);
       setUserHasGroup(1);
-
-      console.log('set group', groupId);
     };
 
+    const getMemberList = async () =>{
+      const userId = auth.user?.uid;
+
+      if (!userId) return;
+
+      const user = await userContext?.getUser(userId);
+
+      if(!user) return;
+
+      const groupId = user?.group;
+
+      if(!groupId) return;
+
+      const list = await userContext?.getUsersByGroup(groupId)
+      
+      if(!list) return;
+
+      setMemberList(list)
+    }
+
+    const getGroupName = async () => {
+      const userId = auth.user?.uid;
+
+      if (!userId) return;
+
+      const group = await groupContext?.getGroupByUser(userId)
+
+      if(!group) return;
+
+      setGroupName(group.name)
+    }
+
     checkUserGroup().catch(console.error);
+    getMemberList().catch(console.error);
+    getGroupName().catch(console.error)
   }, []);
 
   const onJoinButtonPressed = async () => {
@@ -101,7 +135,10 @@ export const Home: React.FC = () => {
             </TouchableOpacity>
           </ScrollView>
         ) : (
-          <HomeList people={people}></HomeList>
+          <View style={styles.view}>
+            <Text style={styles.welcomeText}>{language.homeWelcomeGroup} {groupName}!</Text>
+            <HomeList people={memberList}></HomeList>
+          </View>    
         )}
       </SafeAreaView>
     </View>
@@ -139,6 +176,13 @@ const styles = StyleSheet.create({
     color: colors.heading,
     fontSize: 20,
     alignItems: 'center',
+  },
+  welcomeText: {
+    color: colors.primary,
+    fontSize: 20,
+    textAlign: 'center',
+    fontWeight: '700',
+    marginBottom: 30
   },
   button: {
     marginTop: 20,
