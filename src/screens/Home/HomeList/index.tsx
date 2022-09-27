@@ -7,36 +7,40 @@ import { useGroup } from '../../../contexts/GroupContext';
 import { useEffect, useState } from 'react';
 import { useUser } from '../../../contexts/UserContext';
 import { IAuthValue, useAuth } from '../../../contexts/AuthContext';
+import { useLan } from '../../../contexts/LanguageContext';
+
+interface Item {
+  name: string;
+  status: number;
+  totalexpense: number;
+}
 
 export const HomeList: React.FC = ({ people }) => {
-
   const auth = useAuth() as IAuthValue;
   const groupContext = useGroup();
   const userContext = useUser();
+  const { language } = useLan();
 
   const [groupId, setGroupId] = useState('');
 
   useEffect(() => {
     const checkUserGroup = async () => {
-    
       const userId = auth.user?.uid;
-  
-      if(!userId) return;
-  
+
+      if (!userId) return;
+
       const user = await userContext?.getUser(userId);
-  
+
       const groupId = user?.group;
-  
+
       if (!groupId) return;
-  
+
       setGroupId(groupId);
-  
+
       console.log('set group', groupId);
-    }
+    };
 
     checkUserGroup().catch(console.error);
-
-
   }, []);
 
   return (
@@ -46,17 +50,17 @@ export const HomeList: React.FC = ({ people }) => {
           <DataTable>
             <DataTable.Header style={styles.textTable}>
               <DataTable.Title>
-                <Text style={styles.textTable}>Name</Text>
+                <Text style={styles.textTable}>{language.HomeListName}</Text>
               </DataTable.Title>
               <DataTable.Title>
-                <Text style={styles.textTable}>Status</Text>
+                <Text style={styles.textTable}>{language.HomeListStatus}</Text>
               </DataTable.Title>
               <DataTable.Title numeric>
-                <Text style={styles.textTable}>R$</Text>
+                <Text style={styles.textTable}>{language.HomeListExpense}</Text>
               </DataTable.Title>
               <DataTable.Title>-</DataTable.Title>
             </DataTable.Header>
-            {people?.map((item) => (
+            {people?.map((item: Item) => (
               <DataTable.Row style={styles.text} key={item.name + 'row'}>
                 <DataTable.Cell>
                   <Text style={styles.text}>{item.name}</Text>

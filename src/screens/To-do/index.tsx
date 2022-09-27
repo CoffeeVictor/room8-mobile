@@ -3,6 +3,7 @@ import { TopBar } from '../../components/TobBar';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { TaskItem, TodoList } from './ItemList';
 import { colors } from '../../constants/Colors';
+import { useLan } from '../../contexts/LanguageContext';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { IAuthValue, useAuth } from '../../contexts/AuthContext';
 import { useGroup } from '../../contexts/GroupContext';
@@ -10,12 +11,14 @@ import { useUser } from '../../contexts/UserContext';
 import { ActivityIndicator } from 'react-native-paper';
 
 export const ToDoListPage: React.FC = () => {
+  const { language } = useLan();
   const auth = useAuth() as IAuthValue;
   const groupContext = useGroup();
   const userContext = useUser();
   const navi = useNavigation();
   const isFocused = useIsFocused();
   const [groupTasks,setGroupTasks] = useState<TaskItem[]>([])
+  const [list] = useState([]);
 
   const handleDeleteTask = async (item: TaskItem) => {
     const userId = auth.user?.uid;
@@ -68,7 +71,7 @@ export const ToDoListPage: React.FC = () => {
       <TopBar></TopBar>
       <View style={styles.view}>
         <View style={styles.listView}>
-          <Text style={styles.textHeader}>To-Do List</Text>
+          <Text style={styles.textHeader}>{language.toDoList}</Text>
           {
             groupTasks === undefined ? <ActivityIndicator></ActivityIndicator> :
             <View>
@@ -85,7 +88,7 @@ export const ToDoListPage: React.FC = () => {
         </View>
         <TouchableOpacity style={styles.submitButton} onPress={() => {
           navi.navigate('CreateTask')}}>
-          <Text style={styles.textBottom}>Create Task</Text>
+          <Text style={styles.textBottom}>{language.toDoListButton}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -106,7 +109,7 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     backgroundColor: colors.primary,
-    width: '40%',
+    width: '50%',
     padding: 15,
     marginTop: 10,
     borderRadius: 10,

@@ -10,10 +10,12 @@ import {
 } from 'react-native';
 import { TodoList } from '../ItemList';
 import { colors } from '../../../constants/Colors';
+import { useLan } from '../../../contexts/LanguageContext';
 import { useNavigation } from '@react-navigation/native';
 import { IAuthValue, useAuth } from '../../../contexts/AuthContext';
 import { useGroup } from '../../../contexts/GroupContext';
 import { useUser } from '../../../contexts/UserContext';
+
 
 export const CreatTask: React.FC = () => {
   const auth = useAuth() as IAuthValue
@@ -24,6 +26,8 @@ export const CreatTask: React.FC = () => {
   const [list, setList] = useState([
     { value: 'Clean the table', people: 'Maely' },
   ]);
+  
+  const { language } = useLan();
   const navi = useNavigation()
 
   const onChangeValue = (text: string) => {
@@ -56,22 +60,22 @@ export const CreatTask: React.FC = () => {
       <TopBar></TopBar>
       <View style={styles.view}>
         <View>
-          <Text style={styles.TextHeader}> Adding To To-Do List</Text>
+          <Text style={styles.textHeader}>{language.toDoListAdding}</Text>
         </View>
         <View style={styles.InputContainer}>
           <TextInput
-            style={styles.Input}
-            placeholder='Add Task...'
+            style={styles.input}
+            placeholder={language.toDoListAddTask}
             onChangeText={onChangeValue}
           />
           <TextInput
-            style={styles.Input}
-            placeholder='Add Responsible...'
+            style={styles.input}
+            placeholder={language.toDoListAddResponseble}
             onChangeText={onChangePeople}
           />
         </View>
         <TouchableOpacity
-          style={styles.SubmitButton}
+          style={styles.submitButton}
           onPress={() => {
             handleCreatTask();
           }}
@@ -92,12 +96,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  InputContainer: {
+  inputContainer: {
     borderRadius: 10,
     marginTop: 20,
   },
 
-  Input: {
+  input: {
     fontSize: 20,
     backgroundColor: 'white',
     width: 300,
@@ -107,7 +111,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  SubmitButton: {
+  submitButton: {
     backgroundColor: colors.primary,
     width: '30%',
     padding: 15,
@@ -116,7 +120,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  TextHeader: {
+  textHeader: {
     fontSize: 24,
     color: colors.heading,
   },

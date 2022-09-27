@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { LanguangeProvider } from './src/contexts/LanguageContext';
 import { AuthProvider } from './src/contexts/AuthContext';
 import { GroupProvider } from './src/contexts/GroupContext';
 import { UserProvider } from './src/contexts/UserContext';
@@ -16,11 +17,13 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <AuthProvider>
-          <UserProvider>
-            <GroupProvider>
-              <Navigation />
-            </GroupProvider>
-          </UserProvider>
+          <LanguangeProvider>
+            <UserProvider>
+              <GroupProvider>
+                <Navigation />
+              </GroupProvider>
+            </UserProvider>
+          </LanguangeProvider>
         </AuthProvider>
         <StatusBar style='inverted' />
       </SafeAreaProvider>
